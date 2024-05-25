@@ -7,4 +7,7 @@
                                     |___/__/
 ```
 
+[![Packagist Downloads](https://raw.githubusercontent.com/andrewgjohnson/badges/main/packagist-badge.png)](https://packagist.org/packages/andrewgjohnson/)
+[![npm Downloads](https://raw.githubusercontent.com/andrewgjohnson/badges/main/npm-badge.png)](https://www.npmjs.com/~andrewgjohnsonjs)
+
 Visit [**andrewgjohnson.com**](https://www.andrewgjohnson.com/) for more information about me
