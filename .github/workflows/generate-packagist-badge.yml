@@ -20,8 +20,8 @@ jobs:
         run: |
           REPOS=(
             "agjgd/agjgd"
-            "andrewgjohnson/ctc-cache"
-            "andrewgjohnson/ctc-serializer"
+            "andrewgjohnson/ctcCache"
+            "andrewgjohnson/ctcSerializer"
             "andrewgjohnson/imagettftextblur"
             "andrewgjohnson/imagettftextgradient"
             "andrewgjohnson/imageblendedcolorallocate"
