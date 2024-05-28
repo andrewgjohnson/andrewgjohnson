@@ -64,7 +64,7 @@ jobs:
 
       - name: Update badge
         run: |
-          BADGE_URL="https://raster.shields.io/badge/stars-"
+          BADGE_URL="https://raster.shields.io/badge/stargazers-"
 
           if [ $TOTAL_STARGAZERS -ge 999500 ]; then
             ROUNDED_STARGAZERS=$(( (TOTAL_STARGAZERS) / 1000000 ))
@@ -79,13 +79,13 @@ jobs:
           BADGE_URL="${BADGE_URL}-0366d6.png?colorB=0366d6&style=flat-square&logoColor=white&logo=github"
 
           echo "Downloading badge from URL: $BADGE_URL"
-          curl -L "$BADGE_URL" -o stars-badge.png
+          curl -L "$BADGE_URL" -o stargazers-badge.png
 
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add stars-badge.png
+          git add stargazers-badge.png
           if [ -n "$(git status --porcelain)" ]; then
             git commit -m "Update badge"
             git push
