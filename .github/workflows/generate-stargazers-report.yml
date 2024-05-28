@@ -46,9 +46,9 @@ jobs:
                   break
                 fi
                 for ID in $IDS; do
+                  STARGAZERS=$((STARGAZERS + 1))
                   if [[ ! " ${UNIQUE_IDS[@]} " =~ " ${ID} " ]]; then
                     UNIQUE_IDS+=("$ID")
-                    STARGAZERS=$((STARGAZERS + 1))
                   fi
                 done
                 if [ $(echo $RESPONSE | jq '. | length') -lt 5 ]; then
