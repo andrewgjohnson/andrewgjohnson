@@ -1,4 +1,4 @@
-**ALL PROJECTS** <br /> [![Stars for agjgd/agjgd](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/stars-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/STARGAZERS.md)
+**Unique stargazers across all projects** <br /> [![Stars for agjgd/agjgd](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/stars-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/STARGAZERS.md)
 
 ---
 
