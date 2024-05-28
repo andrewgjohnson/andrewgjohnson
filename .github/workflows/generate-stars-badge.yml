@@ -24,11 +24,11 @@ jobs:
             "andrewgjohnson/ctcCache"
             "andrewgjohnson/ctcSerializer"
             "andrewgjohnson/eslint-config-google-jsdocless"
-            "andrewgjohnson/imagettftextblur"
-            "andrewgjohnson/imagettftextgradient"
             "andrewgjohnson/imageblendedcolorallocate"
             "andrewgjohnson/imagecolorallocatefromstring"
             "andrewgjohnson/imagegradientrectangle"
+            "andrewgjohnson/imagettftextblur"
+            "andrewgjohnson/imagettftextgradient"
             "andrewgjohnson/linebreaks4imagettftext"
           )
           TOTAL_STARGAZERS=0
