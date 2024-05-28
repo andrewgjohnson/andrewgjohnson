@@ -22,11 +22,11 @@ jobs:
             "agjgd/agjgd"
             "andrewgjohnson/ctc-cache"
             "andrewgjohnson/ctc-serializer"
-            "andrewgjohnson/imagettftextblur"
-            "andrewgjohnson/imagettftextgradient"
             "andrewgjohnson/imageblendedcolorallocate"
             "andrewgjohnson/imagecolorallocatefromstring"
             "andrewgjohnson/imagegradientrectangle"
+            "andrewgjohnson/imagettftextblur"
+            "andrewgjohnson/imagettftextgradient"
             "andrewgjohnson/linebreaks4imagettftext"
           )
           TOTAL_DOWNLOADS=0
