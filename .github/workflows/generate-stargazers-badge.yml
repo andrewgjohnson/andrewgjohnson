@@ -1,4 +1,4 @@
-name: Generate Stars Badge
+name: Generate Stargazers Badge
 
 on:
   schedule:
