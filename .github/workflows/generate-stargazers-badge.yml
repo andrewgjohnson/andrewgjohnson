@@ -21,6 +21,7 @@ jobs:
           REPOS=(
             "agjgd/agjgd"
             "andrewgjohnson/agjCalendar"
+            "andrewgjohnson/andrewgjohnson"
             "andrewgjohnson/ctcCache"
             "andrewgjohnson/ctcSerializer"
             "andrewgjohnson/eslint-config-google-jsdocless"
