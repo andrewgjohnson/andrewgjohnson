@@ -12,4 +12,3 @@ project|stargazers
 [andrewgjohnson/**imagettftextgradient**](https://github.com/andrewgjohnson/imagettftextgradient)|[4](https://github.com/andrewgjohnson/imagettftextgradient/stargazers)
 [andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[5](https://github.com/andrewgjohnson/linebreaks4imagettftext/stargazers)
 **Unique stargazers across all projects**|**37**
-
