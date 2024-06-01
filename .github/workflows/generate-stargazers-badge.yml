@@ -76,7 +76,7 @@ jobs:
             BADGE_URL="${BADGE_URL}${TOTAL_STARGAZERS}"
           fi
 
-          BADGE_URL="${BADGE_URL}-0969da.png?colorA=000000&colorB=0969da&style=flat-square&logoColor=white&logo=github"
+          BADGE_URL="${BADGE_URL}-0969da.png?colorA=1f2823&colorB=0969da&style=flat-square&logoColor=white&logo=github"
 
           echo "Downloading badge from URL: $BADGE_URL"
           curl -L "$BADGE_URL" -o stargazers-badge.png
