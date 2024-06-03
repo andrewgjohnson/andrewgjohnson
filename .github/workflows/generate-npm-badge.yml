@@ -58,7 +58,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add npm-badge.png
           if [ -n "$(git status --porcelain)" ]; then
-            git commit -m "Update badge"
+            git commit -m "Update npm badge"
             git push
           else
             echo "No changes to commit"
