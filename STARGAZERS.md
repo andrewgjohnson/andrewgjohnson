@@ -1,6 +1,7 @@
 project|stargazers
 -------|----------
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[1](https://github.com/agjgd/agjgd/stargazers)
+[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[1](https://github.com/agjjQuery/agjjQuery/stargazers)
 [andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[3](https://github.com/andrewgjohnson/agjCalendar/stargazers)
 [andrewgjohnson/**andrewgjohnson**](https://github.com/andrewgjohnson/andrewgjohnson)|[1](https://github.com/andrewgjohnson/andrewgjohnson/stargazers)
 [andrewgjohnson/**ctcCache**](https://github.com/andrewgjohnson/ctcCache)|[2](https://github.com/andrewgjohnson/ctcCache/stargazers)
