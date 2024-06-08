@@ -68,7 +68,7 @@ jobs:
           IFS=$'\n' SORTED_REPO_STARGAZERS=($(sort -k2,2nr -k1,1 <<<"${REPO_STARGAZERS[*]}"))
           unset IFS
 
-          REPORT="project|stargazers\n-------|----------\n"
+          REPORT="Project|Stargazers\n-------|----------\n"
           for ENTRY in "${SORTED_REPO_STARGAZERS[@]}"; do
             REPO=$(echo $ENTRY | awk '{print $1}')
             STARGAZERS=$(echo $ENTRY | awk '{print $2}')
