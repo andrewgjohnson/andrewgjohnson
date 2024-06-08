@@ -162,5 +162,7 @@ jobs:
           else
             echo "No changes to commit"
           fi
+          rm -rf packagist_data.md
+          rm -rf npm_data.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
