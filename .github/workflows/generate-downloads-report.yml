@@ -150,6 +150,7 @@ jobs:
           echo "Packagist — *PHP*|$FORMATTED_TOTAL_PACKAGIST_DOWNLOADS" >> DOWNLOADS.md
           echo "npm — *Javascript*|$FORMATTED_TOTAL_NPM_DOWNLOADS" >> DOWNLOADS.md
           echo "**Total downloads across all projects on all platforms**|**$FORMATTED_GRAND_TOTAL**" >> DOWNLOADS.md
+          rm -rf packagist_data.md npm_data.md
 
       - name: Commit and push report
         run: |
@@ -162,7 +163,5 @@ jobs:
           else
             echo "No changes to commit"
           fi
-          rm -rf packagist_data.md
-          rm -rf npm_data.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
