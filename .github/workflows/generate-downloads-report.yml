@@ -55,7 +55,7 @@ jobs:
             TOTAL_PACKAGIST_DOWNLOADS=$((TOTAL_PACKAGIST_DOWNLOADS + DOWNLOADS_TOTAL))
             FORMATTED_DOWNLOADS=$(format_number $DOWNLOADS_TOTAL)
             REPO_BOLD=$(echo "$REPO" | sed -E 's|(.*)/(.*)|\1/**\2**|')
-            PACKAGIST_DATA+=("${DOWNLOADS_TOTAL}|[${REPO_BOLD}](https://github.com/${REPO})|[${FORMATTED_DOWNLOADS}](https://packagist.org/packages/${PACKAGE})")
+            PACKAGIST_DATA+=("${DOWNLOADS_TOTAL}|[${REPO_BOLD}](https://github.com/${REPO})|[${FORMATTED_DOWNLOADS}](https://packagist.org/packages/${PACKAGE}/stats)")
             rm -rf tmp.json
           done
           echo "TOTAL_PACKAGIST_DOWNLOADS=$TOTAL_PACKAGIST_DOWNLOADS" >> $GITHUB_ENV
