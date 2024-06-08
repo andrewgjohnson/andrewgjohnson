@@ -20,6 +20,6 @@ Project|npm Downloads
 
 Platform|Downloads
 --------|---------
-Packagist|133k
-npm|1k
+Packagist — *PHP*|133k
+npm — *Javascript*|1k
 **Total downloads across all projects on all platforms**|**134k**
