@@ -1,4 +1,4 @@
-project|stargazers
+Project|Stargazers
 -------|----------
 [andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[27](https://github.com/andrewgjohnson/imagettftextblur/stargazers)
 [andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[5](https://github.com/andrewgjohnson/linebreaks4imagettftext/stargazers)
