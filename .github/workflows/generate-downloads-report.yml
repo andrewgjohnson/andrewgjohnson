@@ -125,7 +125,7 @@ jobs:
           FORMATTED_TOTAL_NPM_DOWNLOADS=$(format_number $TOTAL_NPM_DOWNLOADS)
           FORMATTED_GRAND_TOTAL=$(format_number $GRAND_TOTAL)
 
-          echo "project|Packagist downloads" > DOWNLOADS.md
+          echo "Project|Packagist Downloads" > DOWNLOADS.md
           echo "-------|-------------------" >> DOWNLOADS.md
           while IFS= read -r line; do
             DOWNLOADS=$(echo "$line" | cut -d'|' -f1)
@@ -135,7 +135,7 @@ jobs:
           done < packagist_data.md
           echo "**Total Packagist downloads across all projects**|**$FORMATTED_TOTAL_PACKAGIST_DOWNLOADS**" >> DOWNLOADS.md
           echo "" >> DOWNLOADS.md
-          echo "project|npm downloads" >> DOWNLOADS.md
+          echo "Project|npm Downloads" >> DOWNLOADS.md
           echo "-------|-------------" >> DOWNLOADS.md
           while IFS= read -r line; do
             DOWNLOADS=$(echo "$line" | cut -d'|' -f1)
@@ -145,7 +145,7 @@ jobs:
           done < npm_data.md
           echo "**Total npm downloads across all projects**|**$FORMATTED_TOTAL_NPM_DOWNLOADS**" >> DOWNLOADS.md
           echo "" >> DOWNLOADS.md
-          echo "platform|downloads" >> DOWNLOADS.md
+          echo "Platform|Downloads" >> DOWNLOADS.md
           echo "--------|---------" >> DOWNLOADS.md
           echo "Packagist|$FORMATTED_TOTAL_PACKAGIST_DOWNLOADS" >> DOWNLOADS.md
           echo "npm|$FORMATTED_TOTAL_NPM_DOWNLOADS" >> DOWNLOADS.md
