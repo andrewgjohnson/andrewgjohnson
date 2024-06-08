@@ -10,5 +10,5 @@
 Visit [**andrewgjohnson.com**](https://www.andrewgjohnson.com/) for more information about me
 
 [![Stargazers](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/stargazers-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/STARGAZERS.md)
-[![Packagist Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/packagist-badge.png)](https://packagist.org/packages/andrewgjohnson/)
-[![npm Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/npm-badge.png)](https://www.npmjs.com/~andrewgjohnsonjs)
+[![Packagist Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/packagist-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md)
+[![npm Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/npm-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md)
