@@ -13,9 +13,9 @@ Project|Packagist Downloads
 
 Project|npm Downloads
 -------|-------------
-[andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[952](https://www.npmjs.com/package/agjcalendar)
+[andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[975](https://www.npmjs.com/package/agjcalendar)
 [andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[92](https://www.npmjs.com/package/eslint-config-google-jsdocless)
-[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[48](https://www.npmjs.com/package/@agjjquery/agjjquery)
+[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[54](https://www.npmjs.com/package/@agjjquery/agjjquery)
 **Total npm downloads across all projects**|**1k**
 
 Platform|Downloads
