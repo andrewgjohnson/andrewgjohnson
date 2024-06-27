@@ -1,0 +1,199 @@
+name: Downloads Badges and Report
+
+on:
+  schedule:
+    - cron: '0 * * * *' # run hourly
+  workflow_dispatch: # allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-downloads:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Packagist downloads
+        id: packagist-downloads
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen en_US.UTF-8
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+
+          declare -A REPOS
+          REPOS=(
+            ["agjgd/agjgd"]="agjgd/agjgd"
+            ["andrewgjohnson/ctcCache"]="andrewgjohnson/ctc-cache"
+            ["andrewgjohnson/ctcSerializer"]="andrewgjohnson/ctc-serializer"
+            ["andrewgjohnson/imageblendedcolorallocate"]="andrewgjohnson/imageblendedcolorallocate"
+            ["andrewgjohnson/imagecolorallocatefromstring"]="andrewgjohnson/imagecolorallocatefromstring"
+            ["andrewgjohnson/imagegradientrectangle"]="andrewgjohnson/imagegradientrectangle"
+            ["andrewgjohnson/imagettftextblur"]="andrewgjohnson/imagettftextblur"
+            ["andrewgjohnson/imagettftextgradient"]="andrewgjohnson/imagettftextgradient"
+            ["andrewgjohnson/linebreaks4imagettftext"]="andrewgjohnson/linebreaks4imagettftext"
+          )
+          TOTAL_PACKAGIST_DOWNLOADS=0
+          PACKAGIST_DATA=()
+
+          round() {
+            echo $1 | awk '{printf "%d", ($1 + 0.5)}'
+          }
+
+          format_number() {
+            #if [ $1 -ge 999500 ]; then
+              #echo "$(round $(echo "$1 / 1000000" | bc -l))M"
+            #elif [ $1 -ge 1000 ]; then
+              #echo "$(round $(echo "$1 / 1000" | bc -l))k"
+            #else
+              #echo $1
+            #fi
+            printf "%'d" $1
+          }
+
+          for REPO in "${!REPOS[@]}"; do
+            PACKAGE=${REPOS[$REPO]}
+            curl -s "https://packagist.org/packages/$PACKAGE/stats.json" -o tmp.json
+            DOWNLOADS_TOTAL=$(jq '.downloads.total' tmp.json)
+            TOTAL_PACKAGIST_DOWNLOADS=$((TOTAL_PACKAGIST_DOWNLOADS + DOWNLOADS_TOTAL))
+            FORMATTED_DOWNLOADS=$(format_number $DOWNLOADS_TOTAL)
+            REPO_BOLD=$(echo "$REPO" | sed -E 's|(.*)/(.*)|\1/**\2**|')
+            PACKAGIST_DATA+=("${DOWNLOADS_TOTAL}|[${REPO_BOLD}](https://github.com/${REPO})|[${FORMATTED_DOWNLOADS}](https://packagist.org/packages/${PACKAGE}/stats)")
+            rm -rf tmp.json
+          done
+          echo "TOTAL_PACKAGIST_DOWNLOADS=$TOTAL_PACKAGIST_DOWNLOADS" >> $GITHUB_ENV
+          printf "%s\n" "${PACKAGIST_DATA[@]}" | sort -nr > packagist_data.md
+
+      - name: Fetch NPM downloads
+        id: npm-downloads
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen en_US.UTF-8
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+
+          declare -A REPOS
+          REPOS=(
+            ["andrewgjohnson/agjCalendar"]="agjcalendar"
+            ["andrewgjohnson/eslint-config-google-jsdocless"]="eslint-config-google-jsdocless"
+            ["agjjQuery/agjjQuery"]="@agjjquery/agjjquery"
+          )
+          TOTAL_NPM_DOWNLOADS=0
+          NPM_DATA=()
+          END_DATE=$(date +"%Y-%m-%d")
+
+          round() {
+            echo $1 | awk '{printf "%d", ($1 + 0.5)}'
+          }
+
+          format_number() {
+            #if [ $1 -ge 999500 ]; then
+              #echo "$(round $(echo "$1 / 1000000" | bc -l))M"
+            #elif [ $1 -ge 1000 ]; then
+              #echo "$(round $(echo "$1 / 1000" | bc -l))k"
+            #else
+              #echo $1
+            #fi
+            printf "%'d" $1
+          }
+
+          for REPO in "${!REPOS[@]}"; do
+            PACKAGE=${REPOS[$REPO]}
+            curl -s "https://api.npmjs.org/downloads/range/2000-01-01:${END_DATE}/$PACKAGE" -o tmp.json
+            DOWNLOADS_TOTAL=$(jq '[.downloads[].downloads] | add' tmp.json)
+            TOTAL_NPM_DOWNLOADS=$((TOTAL_NPM_DOWNLOADS + DOWNLOADS_TOTAL))
+            FORMATTED_DOWNLOADS=$(format_number $DOWNLOADS_TOTAL)
+            REPO_BOLD=$(echo "$REPO" | sed -E 's|(.*)/(.*)|\1/**\2**|')
+            NPM_DATA+=("${DOWNLOADS_TOTAL}|[${REPO_BOLD}](https://github.com/${REPO})|[${FORMATTED_DOWNLOADS}](https://www.npmjs.com/package/${PACKAGE})")
+            rm -rf tmp.json
+          done
+          echo "TOTAL_NPM_DOWNLOADS=$TOTAL_NPM_DOWNLOADS" >> $GITHUB_ENV
+          printf "%s\n" "${NPM_DATA[@]}" | sort -nr > npm_data.md
+
+      - name: Generate report
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen en_US.UTF-8
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+
+          TOTAL_PACKAGIST_DOWNLOADS=${{ env.TOTAL_PACKAGIST_DOWNLOADS }}
+          TOTAL_NPM_DOWNLOADS=${{ env.TOTAL_NPM_DOWNLOADS }}
+          GRAND_TOTAL=$((TOTAL_PACKAGIST_DOWNLOADS + TOTAL_NPM_DOWNLOADS))
+
+          round() {
+            echo $1 | awk '{printf "%d", ($1 + 0.5)}'
+          }
+
+          format_number() {
+            #if [ $1 -ge 999500 ]; then
+              #echo "$(round $(echo "$1 / 1000000" | bc -l))M"
+            #elif [ $1 -ge 1000 ]; then
+              #echo "$(round $(echo "$1 / 1000" | bc -l))k"
+            #else
+              #echo $1
+            #fi
+            printf "%'d" $1
+          }
+
+          FORMATTED_TOTAL_PACKAGIST_DOWNLOADS=$(format_number $TOTAL_PACKAGIST_DOWNLOADS)
+          FORMATTED_TOTAL_NPM_DOWNLOADS=$(format_number $TOTAL_NPM_DOWNLOADS)
+          FORMATTED_GRAND_TOTAL=$(format_number $GRAND_TOTAL)
+
+          echo "Project|Packagist Downloads" > DOWNLOADS.md
+          echo "-------|-------------------" >> DOWNLOADS.md
+          while IFS= read -r line; do
+            DOWNLOADS=$(echo "$line" | cut -d'|' -f1)
+            REPO_LINK=$(echo "$line" | cut -d'|' -f2)
+            DOWNLOADS_LINK=$(echo "$line" | cut -d'|' -f3)
+            echo "$REPO_LINK|$DOWNLOADS_LINK" >> DOWNLOADS.md
+          done < packagist_data.md
+          echo "**Total Packagist downloads across all projects**|**$FORMATTED_TOTAL_PACKAGIST_DOWNLOADS**" >> DOWNLOADS.md
+          echo "" >> DOWNLOADS.md
+          echo "Project|npm Downloads" >> DOWNLOADS.md
+          echo "-------|-------------" >> DOWNLOADS.md
+          while IFS= read -r line; do
+            DOWNLOADS=$(echo "$line" | cut -d'|' -f1)
+            REPO_LINK=$(echo "$line" | cut -d'|' -f2)
+            DOWNLOADS_LINK=$(echo "$line" | cut -d'|' -f3)
+            echo "$REPO_LINK|$DOWNLOADS_LINK" >> DOWNLOADS.md
+          done < npm_data.md
+          echo "**Total npm downloads across all projects**|**$FORMATTED_TOTAL_NPM_DOWNLOADS**" >> DOWNLOADS.md
+          echo "" >> DOWNLOADS.md
+          echo "Platform|Downloads" >> DOWNLOADS.md
+          echo "--------|---------" >> DOWNLOADS.md
+          echo "Packagist — *PHP*|$FORMATTED_TOTAL_PACKAGIST_DOWNLOADS" >> DOWNLOADS.md
+          echo "npm — *Javascript*|$FORMATTED_TOTAL_NPM_DOWNLOADS" >> DOWNLOADS.md
+          echo "**Total downloads across all projects on all platforms**|**$FORMATTED_GRAND_TOTAL**" >> DOWNLOADS.md
+
+          BADGE_URL="https://raster.shields.io/badge/downloads-${FORMATTED_TOTAL_PACKAGIST_DOWNLOADS}-0969da.png?colorA=1f2823&colorB=0969da&style=flat-square&logoColor=white&logo=packagist"
+          echo "Downloading Packagist badge from URL: $BADGE_URL"
+          curl -L "$BADGE_URL" -o packagist-badge.png
+
+          BADGE_URL="https://raster.shields.io/badge/downloads-${FORMATTED_TOTAL_NPM_DOWNLOADS}-0969da.png?colorA=1f2823&colorB=0969da&style=flat-square&logoColor=white&logo=npm"
+          echo "Downloading npm badge from URL: $BADGE_URL"
+          curl -L "$BADGE_URL" -o npm-badge.png
+          
+          rm -rf packagist_data.md npm_data.md
+
+      - name: Commit and push report
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add DOWNLOADS.md
+          git add packagist-badge.png
+          git add npm-badge.png
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Update downloads badges and report"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
