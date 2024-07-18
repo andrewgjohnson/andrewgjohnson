@@ -1,7 +1,7 @@
 Project|Packagist Downloads
 -------|-------------------
-[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[102,234](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
-[andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[32,309](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
+[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[102,235](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
+[andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[32,338](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
 [andrewgjohnson/**imagettftextgradient**](https://github.com/andrewgjohnson/imagettftextgradient)|[451](https://packagist.org/packages/andrewgjohnson/imagettftextgradient/stats)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[21](https://packagist.org/packages/andrewgjohnson/imageblendedcolorallocate/stats)
 [andrewgjohnson/**imagegradientrectangle**](https://github.com/andrewgjohnson/imagegradientrectangle)|[18](https://packagist.org/packages/andrewgjohnson/imagegradientrectangle/stats)
@@ -9,17 +9,17 @@ Project|Packagist Downloads
 [andrewgjohnson/**ctcSerializer**](https://github.com/andrewgjohnson/ctcSerializer)|[9](https://packagist.org/packages/andrewgjohnson/ctc-serializer/stats)
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[7](https://packagist.org/packages/agjgd/agjgd/stats)
 [andrewgjohnson/**ctcCache**](https://github.com/andrewgjohnson/ctcCache)|[5](https://packagist.org/packages/andrewgjohnson/ctc-cache/stats)
-**Total Packagist downloads across all projects**|**135,067**
+**Total Packagist downloads across all projects**|**135,097**
 
 Project|npm Downloads
 -------|-------------
 [andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[1,060](https://www.npmjs.com/package/agjcalendar)
-[andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[148](https://www.npmjs.com/package/eslint-config-google-jsdocless)
+[andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[149](https://www.npmjs.com/package/eslint-config-google-jsdocless)
 [agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[71](https://www.npmjs.com/package/@agjjquery/agjjquery)
-**Total npm downloads across all projects**|**1,279**
+**Total npm downloads across all projects**|**1,280**
 
 Platform|Downloads
 --------|---------
-Packagist — *PHP*|135,067
-npm — *Javascript*|1,279
-**Total downloads across all projects on all platforms**|**136,346**
+Packagist — *PHP*|135,097
+npm — *Javascript*|1,280
+**Total downloads across all projects on all platforms**|**136,377**
