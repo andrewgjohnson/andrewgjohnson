@@ -1,6 +1,6 @@
 Project|Packagist Downloads
 -------|-------------------
-[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[103,775](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
+[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[103,779](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
 [andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[33,251](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
 [andrewgjohnson/**imagettftextgradient**](https://github.com/andrewgjohnson/imagettftextgradient)|[452](https://packagist.org/packages/andrewgjohnson/imagettftextgradient/stats)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[21](https://packagist.org/packages/andrewgjohnson/imageblendedcolorallocate/stats)
@@ -9,17 +9,17 @@ Project|Packagist Downloads
 [andrewgjohnson/**ctcSerializer**](https://github.com/andrewgjohnson/ctcSerializer)|[9](https://packagist.org/packages/andrewgjohnson/ctc-serializer/stats)
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[7](https://packagist.org/packages/agjgd/agjgd/stats)
 [andrewgjohnson/**ctcCache**](https://github.com/andrewgjohnson/ctcCache)|[5](https://packagist.org/packages/andrewgjohnson/ctc-cache/stats)
-**Total Packagist downloads across all projects**|**137,551**
+**Total Packagist downloads across all projects**|**137,555**
 
 Project|npm Downloads
 -------|-------------
-[andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[1,097](https://www.npmjs.com/package/agjcalendar)
+[andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[1,098](https://www.npmjs.com/package/agjcalendar)
 [andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[172](https://www.npmjs.com/package/eslint-config-google-jsdocless)
 [agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[82](https://www.npmjs.com/package/@agjjquery/agjjquery)
-**Total npm downloads across all projects**|**1,351**
+**Total npm downloads across all projects**|**1,352**
 
 Platform|Downloads
 --------|---------
-Packagist — *PHP*|137,551
-npm — *Javascript*|1,351
-**Total downloads across all projects on all platforms**|**138,902**
+Packagist — *PHP*|137,555
+npm — *Javascript*|1,352
+**Total downloads across all projects on all platforms**|**138,907**
