@@ -146,8 +146,8 @@ jobs:
           FORMATTED_TOTAL_NPM_DOWNLOADS=$(format_number $TOTAL_NPM_DOWNLOADS)
           FORMATTED_GRAND_TOTAL=$(format_number $GRAND_TOTAL)
 
-          echo "Project|Packagist Downloads" > DOWNLOADS.md
-          echo "-------|-------------------" >> DOWNLOADS.md
+          echo "PHP Project|Packagist Downloads" > DOWNLOADS.md
+          echo "-----------|-------------------" >> DOWNLOADS.md
           while IFS= read -r line; do
             DOWNLOADS=$(echo "$line" | cut -d'|' -f1)
             REPO_LINK=$(echo "$line" | cut -d'|' -f2)
@@ -156,8 +156,8 @@ jobs:
           done < packagist_data.md
           echo "**Total Packagist downloads across all projects**|**$FORMATTED_TOTAL_PACKAGIST_DOWNLOADS**" >> DOWNLOADS.md
           echo "" >> DOWNLOADS.md
-          echo "Project|npm Downloads" >> DOWNLOADS.md
-          echo "-------|-------------" >> DOWNLOADS.md
+          echo "Javascript Project|npm Downloads" >> DOWNLOADS.md
+          echo "------------------|-------------" >> DOWNLOADS.md
           while IFS= read -r line; do
             DOWNLOADS=$(echo "$line" | cut -d'|' -f1)
             REPO_LINK=$(echo "$line" | cut -d'|' -f2)
