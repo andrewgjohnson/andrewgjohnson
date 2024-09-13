@@ -154,7 +154,7 @@ jobs:
             DOWNLOADS_LINK=$(echo "$line" | cut -d'|' -f3)
             echo "$REPO_LINK|$DOWNLOADS_LINK" >> DOWNLOADS.md
           done < packagist_data.md
-          echo "**Total Packagist downloads across PHP projects**|**$FORMATTED_TOTAL_PACKAGIST_DOWNLOADS**" >> DOWNLOADS.md
+          echo "**Total Packagist downloads across all PHP projects**|**$FORMATTED_TOTAL_PACKAGIST_DOWNLOADS**" >> DOWNLOADS.md
           echo "" >> DOWNLOADS.md
           echo "Javascript Project|npm Downloads" >> DOWNLOADS.md
           echo "------------------|-------------" >> DOWNLOADS.md
@@ -164,7 +164,7 @@ jobs:
             DOWNLOADS_LINK=$(echo "$line" | cut -d'|' -f3)
             echo "$REPO_LINK|$DOWNLOADS_LINK" >> DOWNLOADS.md
           done < npm_data.md
-          echo "**Total npm downloads across Javascript projects**|**$FORMATTED_TOTAL_NPM_DOWNLOADS**" >> DOWNLOADS.md
+          echo "**Total npm downloads across all Javascript projects**|**$FORMATTED_TOTAL_NPM_DOWNLOADS**" >> DOWNLOADS.md
           echo "" >> DOWNLOADS.md
           echo "Platform|Downloads" >> DOWNLOADS.md
           echo "--------|---------" >> DOWNLOADS.md
