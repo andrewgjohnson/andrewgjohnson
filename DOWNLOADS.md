@@ -15,11 +15,11 @@ Javascript Project|npm Downloads
 ------------------|-------------
 [andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[1,222](https://www.npmjs.com/package/agjcalendar)
 [andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[220](https://www.npmjs.com/package/eslint-config-google-jsdocless)
-[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[98](https://www.npmjs.com/package/@agjjquery/agjjquery)
-**Total npm downloads across all Javascript projects**|**1,540**
+[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[99](https://www.npmjs.com/package/@agjjquery/agjjquery)
+**Total npm downloads across all Javascript projects**|**1,541**
 
 Platform|Downloads
 --------|---------
 Packagist — *PHP*|146,451
-npm — *Javascript*|1,540
-**Total downloads across all projects on all platforms**|**147,991**
+npm — *Javascript*|1,541
+**Total downloads across all projects on all platforms**|**147,992**
