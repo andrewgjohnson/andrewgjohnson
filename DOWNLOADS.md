@@ -1,6 +1,6 @@
 PHP Project|Packagist Downloads
 -----------|-------------------
-[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[111,253](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
+[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[111,260](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
 [andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[36,394](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
 [andrewgjohnson/**imagettftextgradient**](https://github.com/andrewgjohnson/imagettftextgradient)|[460](https://packagist.org/packages/andrewgjohnson/imagettftextgradient/stats)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[27](https://packagist.org/packages/andrewgjohnson/imageblendedcolorallocate/stats)
@@ -9,17 +9,17 @@ PHP Project|Packagist Downloads
 [andrewgjohnson/**ctcSerializer**](https://github.com/andrewgjohnson/ctcSerializer)|[10](https://packagist.org/packages/andrewgjohnson/ctc-serializer/stats)
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[7](https://packagist.org/packages/agjgd/agjgd/stats)
 [andrewgjohnson/**ctcCache**](https://github.com/andrewgjohnson/ctcCache)|[6](https://packagist.org/packages/andrewgjohnson/ctc-cache/stats)
-**Total Packagist downloads across all PHP projects**|**148,192**
+**Total Packagist downloads across all PHP projects**|**148,199**
 
 Javascript Project|npm Downloads
 ------------------|-------------
-[andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[1,233](https://www.npmjs.com/package/agjcalendar)
+[andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[1,234](https://www.npmjs.com/package/agjcalendar)
 [andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[235](https://www.npmjs.com/package/eslint-config-google-jsdocless)
 [agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[102](https://www.npmjs.com/package/@agjjquery/agjjquery)
-**Total npm downloads across all Javascript projects**|**1,570**
+**Total npm downloads across all Javascript projects**|**1,571**
 
 Platform|Downloads
 --------|---------
-Packagist — *PHP*|148,192
-npm — *Javascript*|1,570
-**Total downloads across all projects on all platforms**|**149,762**
+Packagist — *PHP*|148,199
+npm — *Javascript*|1,571
+**Total downloads across all projects on all platforms**|**149,770**
