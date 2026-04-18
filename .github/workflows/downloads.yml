@@ -28,8 +28,6 @@ jobs:
           declare -A REPOS
           REPOS=(
             ["agjgd/agjgd"]="agjgd/agjgd"
-            ["andrewgjohnson/ctcCache"]="andrewgjohnson/ctc-cache"
-            ["andrewgjohnson/ctcSerializer"]="andrewgjohnson/ctc-serializer"
             ["andrewgjohnson/imageblendedcolorallocate"]="andrewgjohnson/imageblendedcolorallocate"
             ["andrewgjohnson/imagecolorallocatefromstring"]="andrewgjohnson/imagecolorallocatefromstring"
             ["andrewgjohnson/imagegradientrectangle"]="andrewgjohnson/imagegradientrectangle"
