@@ -30,6 +30,7 @@ jobs:
             "andrewgjohnson/imagettftextblur"
             "andrewgjohnson/imagettftextgradient"
             "andrewgjohnson/linebreaks4imagettftext"
+            "andrewgjohnson/www.andrewgjohnson.com"
           )
           UNIQUE_IDS=()
           REPO_STARGAZERS=()
