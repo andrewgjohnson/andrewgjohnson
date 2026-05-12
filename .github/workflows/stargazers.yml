@@ -23,8 +23,6 @@ jobs:
             "agjjQuery/agjjQuery"
             "andrewgjohnson/agjCalendar"
             "andrewgjohnson/andrewgjohnson"
-            "andrewgjohnson/ctcCache"
-            "andrewgjohnson/ctcSerializer"
             "andrewgjohnson/eslint-config-google-jsdocless"
             "andrewgjohnson/imageblendedcolorallocate"
             "andrewgjohnson/imagecolorallocatefromstring"
