@@ -1,5 +1,7 @@
-"ignoredFiles": [
-    "npm-badge.png",
-    "packagist-badge.png",
-    "stargazers-badge.png"
-]
+{
+    "ignoredFiles": [
+        "npm-badge.png",
+        "packagist-badge.png",
+        "stargazers-badge.png"
+    ]
+}
