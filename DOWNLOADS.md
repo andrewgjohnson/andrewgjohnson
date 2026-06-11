@@ -1,13 +1,13 @@
 PHP Project|Packagist Downloads
 -----------|-------------------
-[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[234,438](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
+[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[234,497](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
 [andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[58,990](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
 [andrewgjohnson/**imagettftextgradient**](https://github.com/andrewgjohnson/imagettftextgradient)|[514](https://packagist.org/packages/andrewgjohnson/imagettftextgradient/stats)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[52](https://packagist.org/packages/andrewgjohnson/imageblendedcolorallocate/stats)
 [andrewgjohnson/**imagegradientrectangle**](https://github.com/andrewgjohnson/imagegradientrectangle)|[25](https://packagist.org/packages/andrewgjohnson/imagegradientrectangle/stats)
 [andrewgjohnson/**imagecolorallocatefromstring**](https://github.com/andrewgjohnson/imagecolorallocatefromstring)|[16](https://packagist.org/packages/andrewgjohnson/imagecolorallocatefromstring/stats)
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[8](https://packagist.org/packages/agjgd/agjgd/stats)
-**Total Packagist downloads across all PHP projects**|**294,043**
+**Total Packagist downloads across all PHP projects**|**294,102**
 
 Javascript Project|npm Downloads
 ------------------|-------------
@@ -18,6 +18,6 @@ Javascript Project|npm Downloads
 
 Platform|Downloads
 --------|---------
-Packagist — *PHP*|294,043
+Packagist — *PHP*|294,102
 npm — *Javascript*|1,276
-**Total downloads across all projects on all platforms**|**295,319**
+**Total downloads across all projects on all platforms**|**295,378**
