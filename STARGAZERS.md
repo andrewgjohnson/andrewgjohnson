@@ -11,5 +11,6 @@ Project|Stargazers
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[1](https://github.com/andrewgjohnson/imageblendedcolorallocate/stargazers)
 [andrewgjohnson/**imagecolorallocatefromstring**](https://github.com/andrewgjohnson/imagecolorallocatefromstring)|[1](https://github.com/andrewgjohnson/imagecolorallocatefromstring/stargazers)
 [andrewgjohnson/**imagegradientrectangle**](https://github.com/andrewgjohnson/imagegradientrectangle)|[1](https://github.com/andrewgjohnson/imagegradientrectangle/stargazers)
+[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme)|[1](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme/stargazers)
 [andrewgjohnson/**www.andrewgjohnson.com**](https://github.com/andrewgjohnson/www.andrewgjohnson.com)|[1](https://github.com/andrewgjohnson/www.andrewgjohnson.com/stargazers)
 **Unique stargazers across all projects**|**36**
