@@ -1,0 +1,7 @@
+# Normalize end-of-line character
+* text=auto eol=lf
+*.md   text eol=lf
+*.yml  text eol=lf
+
+# Treat image/font assets as binary files
+*.png binary

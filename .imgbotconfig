@@ -1,5 +1,6 @@
 {
     "ignoredFiles": [
+        "jekyll-badge.png",
         "npm-badge.png",
         "packagist-badge.png",
         "stargazers-badge.png"

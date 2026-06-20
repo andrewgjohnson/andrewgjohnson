@@ -1,0 +1,107 @@
+name: Jekyll Theme Installs Badge and Report
+
+on:
+  schedule:
+    - cron: '0 * * * *' # run hourly
+  workflow_dispatch: # allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-jekyll-installs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch jekyll theme installs
+        run: |
+          # The github.com website uses the regex search (per theme):
+          #   /remote_theme:\s*<theme>/ -repo:<theme>
+          # The REST code search API does not support regex, so we emulate it with two
+          # quoted exact-match tokens (AND'd together) which tolerates the whitespace the
+          # regex's \s* would have matched, and exclude the theme's own repository.
+          THEMES=(
+            "andrewgjohnson/open-source-documentation-jekyll-theme"
+          )
+
+          RESULTS=""
+          for THEME in "${THEMES[@]}"; do
+            QUERY="\"remote_theme:\" \"$THEME\" -repo:$THEME"
+            ENCODED=$(jq -rn --arg q "$QUERY" '$q|@uri')
+
+            PAGE=1
+            while true; do
+              RESPONSE=$(curl -s \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/search/code?q=$ENCODED&per_page=100&page=$PAGE")
+
+              if ! echo "$RESPONSE" | jq -e '.items' > /dev/null 2>&1; then
+                echo "Error or no results for $THEME: $(echo "$RESPONSE" | jq -r '.message // "unknown error"')"
+                break
+              fi
+
+              # Exclude matches inside .github/workflows (e.g. this workflow's own
+              # search phrase) since those are not real theme usages.
+              LINES=$(echo "$RESPONSE" | jq -r --arg theme "$THEME" '.items[] | select(.path | startswith(".github/workflows/") | not) | [.repository.full_name, $theme, .html_url] | @tsv')
+              if [ -z "$LINES" ]; then
+                break
+              fi
+              RESULTS+="$LINES"$'\n'
+
+              COUNT=$(echo "$RESPONSE" | jq '.items | length')
+              if [ "$COUNT" -lt 100 ]; then
+                break
+              fi
+              PAGE=$((PAGE + 1))
+              sleep 6 # code search API is rate limited to 10 requests/minute
+            done
+          done
+
+          # Keep the first match per repository + theme pair, then sort by repo name.
+          DEDUPED=$(printf "%s" "$RESULTS" | awk -F'\t' 'NF && !seen[$1 FS $2]++' | sort -t$'\t' -k1,1)
+          TOTAL=$(printf "%s\n" "$DEDUPED" | grep -c . || true)
+
+          REPORT="Project|Theme\n-------|-------------\n"
+          while IFS=$'\t' read -r REPO THEME URL; do
+            [ -z "$REPO" ] && continue
+            USERNAME=$(echo "$REPO" | cut -d'/' -f1)
+            REPO_NAME=$(echo "$REPO" | cut -d'/' -f2)
+            THEME_OWNER=$(echo "$THEME" | cut -d'/' -f1)
+            THEME_NAME=$(echo "$THEME" | cut -d'/' -f2)
+
+            # The code search API only gives us the blob URL, so fetch the raw file and
+            # find the matching line to deep-link to it (e.g. .../_config.yml#L7).
+            RAW_URL=$(echo "$URL" | sed -e 's#https://github.com/#https://raw.githubusercontent.com/#' -e 's#/blob/#/#')
+            LINE=$(curl -sL -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$RAW_URL" | grep -n -m1 -E "remote_theme:[[:space:]]*$THEME" | cut -d':' -f1)
+            if [ -n "$LINE" ]; then
+              URL="$URL#L$LINE"
+            fi
+
+            REPORT+="[$USERNAME/**$REPO_NAME**](https://github.com/$REPO)|[$THEME_OWNER/**$THEME_NAME**]($URL)\n"
+          done <<< "$DEDUPED"
+
+          REPORT+="**Total installs**|**$TOTAL**"
+          echo -e "$REPORT" > JEKYLL.md
+
+          BADGE_URL="https://raster.shields.io/badge/installs-${TOTAL}-0969da.png?colorA=1f2823&colorB=0969da&style=flat-square&logoColor=white&logo=jekyll"
+          echo "Downloading badge from URL: $BADGE_URL"
+          curl -L "$BADGE_URL" -o jekyll-badge.png
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add JEKYLL.md
+          git add jekyll-badge.png
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "Update jekyll theme installs badge and report"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
