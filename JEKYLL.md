@@ -1,7 +1,7 @@
 Project|Theme
 -------|-------------
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/agjgd/agjgd/blob/c90ad687fcd0c12694584540ce81947229e6ee2f/_config.yml#L5)
-[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/agjjQuery/agjjQuery/blob/3802def7a709f711d12d7e8dc41823e1983a8a12/_config.yml#L5)
+[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/agjjQuery/agjjQuery/blob/d23777aab43404718bd7308d1958434401660c42/_config.yml#L5)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/imageblendedcolorallocate/blob/c2d1e523ef12b64e06db43446f31902c4990a227/_config.yml#L5)
 [andrewgjohnson/**imagecolorallocatefromstring**](https://github.com/andrewgjohnson/imagecolorallocatefromstring)|[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/imagecolorallocatefromstring/blob/81b1a4af54d012a9fe33e6e6c2121df2dc82551f/_config.yml#L5)
 [andrewgjohnson/**imagegradientrectangle**](https://github.com/andrewgjohnson/imagegradientrectangle)|[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/imagegradientrectangle/blob/64cb4e9861ca5bbafc1ea694d8c79975fc1dfef8/_config.yml#L5)
