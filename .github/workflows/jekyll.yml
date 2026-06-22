@@ -17,7 +17,34 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Fetch jekyll theme installs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # Authenticated GitHub API GET with retries. Prints the JSON body on success
+          # (HTTP 200 + valid JSON) and returns non-zero once retries are exhausted. The
+          # code search API throws transient 403/429 secondary-rate-limit and 5xx errors
+          # (sometimes with an empty/non-JSON body) under load, so a single bad response
+          # must not be mistaken for "no results". Backoff grows with each attempt.
+          api_get() {
+            local url="$1" attempt=1 max=5 resp code body
+            while [ "$attempt" -le "$max" ]; do
+              resp=$(curl -s -w $'\n%{http_code}' \
+                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                "$url")
+              code=$(printf '%s' "$resp" | tail -n1)
+              body=$(printf '%s' "$resp" | sed '$d')
+              if [ "$code" = "200" ] && printf '%s' "$body" | jq -e . > /dev/null 2>&1; then
+                printf '%s' "$body"
+                return 0
+              fi
+              echo "GitHub API $url -> HTTP $code (attempt $attempt/$max); retrying" >&2
+              sleep $((attempt * 15))
+              attempt=$((attempt + 1))
+            done
+            return 1
+          }
+
           # The github.com website uses the regex search (per theme):
           #   /remote_theme:\s*<theme>/ -repo:<theme>
           # The REST code search API does not support regex, so we emulate it with two
@@ -34,14 +61,11 @@ jobs:
 
             PAGE=1
             while true; do
-              RESPONSE=$(curl -s \
-                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                -H "Accept: application/vnd.github+json" \
-                "https://api.github.com/search/code?q=$ENCODED&per_page=100&page=$PAGE")
-
-              if ! echo "$RESPONSE" | jq -e '.items' > /dev/null 2>&1; then
-                echo "Error or no results for $THEME: $(echo "$RESPONSE" | jq -r '.message // "unknown error"')"
-                break
+              # Abort the whole job (rather than committing a bogus zero) if the search
+              # cannot be fetched, so the previously committed report/badge are preserved.
+              if ! RESPONSE=$(api_get "https://api.github.com/search/code?q=$ENCODED&per_page=100&page=$PAGE"); then
+                echo "::error::Code search failed for $THEME after retries; aborting without overwriting the existing report."
+                exit 1
               fi
 
               # Exclude matches inside .github/workflows (e.g. this workflow's own
@@ -65,7 +89,7 @@ jobs:
           DEDUPED=$(printf "%s" "$RESULTS" | awk -F'\t' 'NF && !seen[$1 FS $2]++' | sort -t$'\t' -k1,1)
           TOTAL=$(printf "%s\n" "$DEDUPED" | grep -c . || true)
 
-          REPORT="Project|Theme\n-------|-------------\n"
+          REPORT="Project|URL|Theme\n-------|-------------|-------------\n"
           while IFS=$'\t' read -r REPO THEME URL; do
             [ -z "$REPO" ] && continue
             USERNAME=$(echo "$REPO" | cut -d'/' -f1)
@@ -73,18 +97,37 @@ jobs:
             THEME_OWNER=$(echo "$THEME" | cut -d'/' -f1)
             THEME_NAME=$(echo "$THEME" | cut -d'/' -f2)
 
+            # Link the URL column to the repository's GitHub Pages site. The Pages API
+            # returns the exact published URL (html_url), which already reflects a custom
+            # domain set via a root CNAME. If Pages info is unavailable, fall back to the
+            # default *.github.io URL: a user/org site (repo named <user>.github.io) lives
+            # at the domain root, everything else under the /<repo> project path.
+            PAGES_URL=$(curl -s \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/$REPO/pages" | jq -r '.html_url // empty')
+            if [ -z "$PAGES_URL" ]; then
+              USERNAME_LC=$(echo "$USERNAME" | tr '[:upper:]' '[:lower:]')
+              REPO_NAME_LC=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')
+              if [ "$REPO_NAME_LC" = "$USERNAME_LC.github.io" ]; then
+                PAGES_URL="https://$USERNAME_LC.github.io/"
+              else
+                PAGES_URL="https://$USERNAME_LC.github.io/$REPO_NAME/"
+              fi
+            fi
+
             # The code search API only gives us the blob URL, so fetch the raw file and
             # find the matching line to deep-link to it (e.g. .../_config.yml#L7).
             RAW_URL=$(echo "$URL" | sed -e 's#https://github.com/#https://raw.githubusercontent.com/#' -e 's#/blob/#/#')
-            LINE=$(curl -sL -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "$RAW_URL" | grep -n -m1 -E "remote_theme:[[:space:]]*$THEME" | cut -d':' -f1)
+            LINE=$(curl -sL -H "Authorization: token $GITHUB_TOKEN" "$RAW_URL" | grep -n -m1 -E "remote_theme:[[:space:]]*$THEME" | cut -d':' -f1)
             if [ -n "$LINE" ]; then
               URL="$URL#L$LINE"
             fi
 
-            REPORT+="[$USERNAME/**$REPO_NAME**](https://github.com/$REPO)|[$THEME_OWNER/**$THEME_NAME**]($URL)\n"
+            REPORT+="[$USERNAME/**$REPO_NAME**](https://github.com/$REPO)|[$PAGES_URL]($PAGES_URL)|[$THEME_NAME]($URL)\n"
           done <<< "$DEDUPED"
 
-          REPORT+="**Total installs**|**$TOTAL**"
+          REPORT+="**Total installs**||**$TOTAL**"
           echo -e "$REPORT" > JEKYLL.md
 
           BADGE_URL="https://raster.shields.io/badge/installs-${TOTAL}-0969da.png?colorA=1f2823&colorB=0969da&style=flat-square&logoColor=white&logo=jekyll"
