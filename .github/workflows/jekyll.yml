@@ -98,7 +98,7 @@ jobs:
             THEME_ROWS=$(printf "%s\n" "$DEDUPED" | awk -F'\t' -v t="$THEME" '$2 == t')
 
             REPORT+="# [$THEME](https://github.com/$THEME)\n\n"
-            REPORT+="Project|URL\n-------|-------------\n"
+            REPORT+="Project|URL\n-------|---\n"
 
             THEME_TOTAL=0
             while IFS=$'\t' read -r REPO ROW_THEME URL; do
