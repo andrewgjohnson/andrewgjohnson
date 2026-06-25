@@ -1,7 +1,7 @@
 # [andrewgjohnson/open-source-documentation-jekyll-theme](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme)
 
 Project|URL
--------|-------------
+-------|---
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd/blob/a66edc4186159332152fea11eade788681e63446/_config.yml#L5)|[https://agjgd.org/](https://agjgd.org/)
 [agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery/blob/3d573da8bac7aa4f2d413d65de598c5a759062b2/_config.yml#L5)|[https://agjjquery.org/](https://agjjquery.org/)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate/blob/c2d1e523ef12b64e06db43446f31902c4990a227/_config.yml#L5)|[https://imageblendedcolorallocate.agjgd.org/](https://imageblendedcolorallocate.agjgd.org/)
