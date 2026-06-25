@@ -89,45 +89,57 @@ jobs:
           DEDUPED=$(printf "%s" "$RESULTS" | awk -F'\t' 'NF && !seen[$1 FS $2]++' | sort -t$'\t' -k1,1)
           TOTAL=$(printf "%s\n" "$DEDUPED" | grep -c . || true)
 
-          REPORT="Project|URL|Theme\n-------|-------------|-------------\n"
-          while IFS=$'\t' read -r REPO THEME URL; do
-            [ -z "$REPO" ] && continue
-            USERNAME=$(echo "$REPO" | cut -d'/' -f1)
-            REPO_NAME=$(echo "$REPO" | cut -d'/' -f2)
-            THEME_OWNER=$(echo "$THEME" | cut -d'/' -f1)
-            THEME_NAME=$(echo "$THEME" | cut -d'/' -f2)
+          # Build one table per theme (in THEMES order), each preceded by an h1 that
+          # links to the theme's GitHub repo. The Project column deep-links to the line
+          # in the consumer repo that references the theme.
+          REPORT=""
+          for THEME in "${THEMES[@]}"; do
+            # Rows from the deduped set that use this theme (column 2 == theme).
+            THEME_ROWS=$(printf "%s\n" "$DEDUPED" | awk -F'\t' -v t="$THEME" '$2 == t')
 
-            # Link the URL column to the repository's GitHub Pages site. The Pages API
-            # returns the exact published URL (html_url), which already reflects a custom
-            # domain set via a root CNAME. If Pages info is unavailable, fall back to the
-            # default *.github.io URL: a user/org site (repo named <user>.github.io) lives
-            # at the domain root, everything else under the /<repo> project path.
-            PAGES_URL=$(curl -s \
-              -H "Authorization: token $GITHUB_TOKEN" \
-              -H "Accept: application/vnd.github+json" \
-              "https://api.github.com/repos/$REPO/pages" | jq -r '.html_url // empty')
-            if [ -z "$PAGES_URL" ]; then
-              USERNAME_LC=$(echo "$USERNAME" | tr '[:upper:]' '[:lower:]')
-              REPO_NAME_LC=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')
-              if [ "$REPO_NAME_LC" = "$USERNAME_LC.github.io" ]; then
-                PAGES_URL="https://$USERNAME_LC.github.io/"
-              else
-                PAGES_URL="https://$USERNAME_LC.github.io/$REPO_NAME/"
+            REPORT+="# [$THEME](https://github.com/$THEME)\n\n"
+            REPORT+="Project|URL\n-------|-------------\n"
+
+            THEME_TOTAL=0
+            while IFS=$'\t' read -r REPO ROW_THEME URL; do
+              [ -z "$REPO" ] && continue
+              USERNAME=$(echo "$REPO" | cut -d'/' -f1)
+              REPO_NAME=$(echo "$REPO" | cut -d'/' -f2)
+
+              # Link the URL column to the repository's GitHub Pages site. The Pages API
+              # returns the exact published URL (html_url), which already reflects a custom
+              # domain set via a root CNAME. If Pages info is unavailable, fall back to the
+              # default *.github.io URL: a user/org site (repo named <user>.github.io) lives
+              # at the domain root, everything else under the /<repo> project path.
+              PAGES_URL=$(curl -s \
+                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/$REPO/pages" | jq -r '.html_url // empty')
+              if [ -z "$PAGES_URL" ]; then
+                USERNAME_LC=$(echo "$USERNAME" | tr '[:upper:]' '[:lower:]')
+                REPO_NAME_LC=$(echo "$REPO_NAME" | tr '[:upper:]' '[:lower:]')
+                if [ "$REPO_NAME_LC" = "$USERNAME_LC.github.io" ]; then
+                  PAGES_URL="https://$USERNAME_LC.github.io/"
+                else
+                  PAGES_URL="https://$USERNAME_LC.github.io/$REPO_NAME/"
+                fi
               fi
-            fi
 
-            # The code search API only gives us the blob URL, so fetch the raw file and
-            # find the matching line to deep-link to it (e.g. .../_config.yml#L7).
-            RAW_URL=$(echo "$URL" | sed -e 's#https://github.com/#https://raw.githubusercontent.com/#' -e 's#/blob/#/#')
-            LINE=$(curl -sL -H "Authorization: token $GITHUB_TOKEN" "$RAW_URL" | grep -n -m1 -E "remote_theme:[[:space:]]*$THEME" | cut -d':' -f1)
-            if [ -n "$LINE" ]; then
-              URL="$URL#L$LINE"
-            fi
+              # The code search API only gives us the blob URL, so fetch the raw file and
+              # find the matching line to deep-link to it (e.g. .../_config.yml#L7).
+              RAW_URL=$(echo "$URL" | sed -e 's#https://github.com/#https://raw.githubusercontent.com/#' -e 's#/blob/#/#')
+              LINE=$(curl -sL -H "Authorization: token $GITHUB_TOKEN" "$RAW_URL" | grep -n -m1 -E "remote_theme:[[:space:]]*$THEME" | cut -d':' -f1)
+              if [ -n "$LINE" ]; then
+                URL="$URL#L$LINE"
+              fi
 
-            REPORT+="[$USERNAME/**$REPO_NAME**](https://github.com/$REPO)|[$PAGES_URL]($PAGES_URL)|[$THEME_NAME]($URL)\n"
-          done <<< "$DEDUPED"
+              REPORT+="[$USERNAME/**$REPO_NAME**]($URL)|[$PAGES_URL]($PAGES_URL)\n"
+              THEME_TOTAL=$((THEME_TOTAL + 1))
+            done <<< "$THEME_ROWS"
 
-          REPORT+="**Total installs**||**$TOTAL**"
+            REPORT+="**Total installs**|**$THEME_TOTAL**\n\n"
+          done
+
           echo -e "$REPORT" > JEKYLL.md
 
           BADGE_URL="https://raster.shields.io/badge/installs-${TOTAL}-0969da.png?colorA=1f2823&colorB=0969da&style=flat-square&logoColor=white&logo=jekyll"
