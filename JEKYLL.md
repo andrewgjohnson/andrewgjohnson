@@ -3,7 +3,7 @@
 Project|URL
 -------|---
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd/blob/5d2d95e231c45fc74a238ce587b8e9880f90932a/_config.yml#L5)|[https://agjgd.org/](https://agjgd.org/)
-[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery/blob/3d573da8bac7aa4f2d413d65de598c5a759062b2/_config.yml#L5)|[https://agjjquery.org/](https://agjjquery.org/)
+[agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery/blob/0d95a784d01be71144d86a48fd7cb41a7c1daf63/_config.yml#L5)|[https://agjjquery.org/](https://agjjquery.org/)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate/blob/c2d1e523ef12b64e06db43446f31902c4990a227/_config.yml#L5)|[https://imageblendedcolorallocate.agjgd.org/](https://imageblendedcolorallocate.agjgd.org/)
 [andrewgjohnson/**imagecolorallocatefromstring**](https://github.com/andrewgjohnson/imagecolorallocatefromstring/blob/81b1a4af54d012a9fe33e6e6c2121df2dc82551f/_config.yml#L5)|[https://imagecolorallocatefromstring.agjgd.org/](https://imagecolorallocatefromstring.agjgd.org/)
 [andrewgjohnson/**imagegradientrectangle**](https://github.com/andrewgjohnson/imagegradientrectangle/blob/64cb4e9861ca5bbafc1ea694d8c79975fc1dfef8/_config.yml#L5)|[https://imagegradientrectangle.agjgd.org/](https://imagegradientrectangle.agjgd.org/)
