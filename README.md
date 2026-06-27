@@ -9,7 +9,8 @@
 
 Visit [**andrewgjohnson.com**](https://www.andrewgjohnson.com/) for more information about me
 
-[![Packagist Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/packagist-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md)
-[![npm Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/npm-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md)
-[![Jekyll Theme Installs](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/jekyll-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/JEKYLL.md)
-[![Stargazers](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/stargazers-badge.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/STARGAZERS.md)
+[![Packagist Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/packagist.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md)
+[![npm Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/npm.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md)
+[![RubyGems Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/rubygems.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md)
+[![Jekyll Theme Installs](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/jekyll.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/JEKYLL.md)
+[![Stargazers](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/stargazers.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/STARGAZERS.md)
