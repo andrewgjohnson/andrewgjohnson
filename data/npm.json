@@ -1,0 +1,19 @@
+{
+  "repositories": [
+    {
+      "repository": "agjjQuery/agjjQuery",
+      "package": "@agjjquery/agjjquery",
+      "downloads": 214
+    },
+    {
+      "repository": "andrewgjohnson/agjCalendar",
+      "package": "agjcalendar",
+      "downloads": 624
+    },
+    {
+      "repository": "andrewgjohnson/eslint-config-google-jsdocless",
+      "package": "eslint-config-google-jsdocless",
+      "downloads": 495
+    }
+  ]
+}
