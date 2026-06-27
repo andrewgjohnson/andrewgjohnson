@@ -1,0 +1,88 @@
+name: npm Data
+
+on:
+  schedule:
+    - cron: '0 * * * *' # run hourly
+  workflow_dispatch: # allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-npm:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch npm downloads
+        run: |
+          # Only the npm package names need to be maintained here; the matching GitHub
+          # repository is read from each package's registry metadata (.repository.url).
+          PACKAGES=(
+            "agjcalendar"
+            "eslint-config-google-jsdocless"
+            "@agjjquery/agjjquery"
+          )
+          REPO_JSON_ITEMS=()
+          END_DATE=$(date +"%Y-%m-%d")
+
+          for PACKAGE in "${PACKAGES[@]}"; do
+            # Scoped names (@scope/name) must have the slash URL-encoded for the registry.
+            ENCODED=$(jq -rn --arg p "$PACKAGE" '$p|@uri')
+
+            # Derive owner/repo from the package's repository field, normalizing the many
+            # shorthand forms (git+https://, git://, git@github.com:, github:owner/repo).
+            REPO_URL=$(curl -s "https://registry.npmjs.org/$ENCODED" | jq -r '.repository.url // .repository // empty')
+            REPO=$(echo "$REPO_URL" \
+              | sed -E 's#^git\+##; s#\.git$##' \
+              | sed -E 's#^https?://github\.com/##; s#^git://github\.com/##; s#^git@github\.com:##; s#^github:##')
+            if [ -z "$REPO" ]; then
+              echo "::warning::No GitHub repository found in npm metadata for $PACKAGE; falling back to package name"
+              REPO="$PACKAGE"
+            fi
+
+            curl -s "https://api.npmjs.org/downloads/range/2000-01-01:${END_DATE}/$PACKAGE" -o tmp.json
+            DOWNLOADS_TOTAL=$(jq '[.downloads[].downloads] | add' tmp.json)
+            ITEM=$(jq -n \
+              --arg repository "$REPO" \
+              --arg package "$PACKAGE" \
+              --argjson downloads "$DOWNLOADS_TOTAL" \
+              '{repository: $repository, package: $package, downloads: $downloads}')
+            REPO_JSON_ITEMS+=("$ITEM")
+            rm -rf tmp.json
+          done
+
+          mkdir -p data
+          printf '%s\n' "${REPO_JSON_ITEMS[@]}" | jq -s \
+            '{repositories: sort_by(.repository)}' > data/npm.json
+
+          echo "Wrote data/npm.json:"
+          cat data/npm.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/npm.json
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update npm data"
+
+          # The other data workflows run on the same hourly cron and also push to main,
+          # so a push can be rejected if one of them committed first. Rebase onto the
+          # latest remote and retry a few times before giving up.
+          for ATTEMPT in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $ATTEMPT); rebasing on latest main and retrying"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push after multiple attempts"
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

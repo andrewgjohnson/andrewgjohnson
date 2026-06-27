@@ -1,0 +1,76 @@
+name: Packagist Data
+
+on:
+  schedule:
+    - cron: '0 * * * *' # run hourly
+  workflow_dispatch: # allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-packagist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Packagist downloads
+        run: |
+          # On Packagist the package name is the GitHub repo name (owner/repo), so a
+          # single flat list serves as both.
+          REPOS=(
+            "agjgd/agjgd"
+            "andrewgjohnson/imageblendedcolorallocate"
+            "andrewgjohnson/imagecolorallocatefromstring"
+            "andrewgjohnson/imagegradientrectangle"
+            "andrewgjohnson/imagettftextblur"
+            "andrewgjohnson/imagettftextgradient"
+            "andrewgjohnson/linebreaks4imagettftext"
+          )
+          REPO_JSON_ITEMS=()
+
+          for REPO in "${REPOS[@]}"; do
+            curl -s "https://packagist.org/packages/$REPO/stats.json" -o tmp.json
+            DOWNLOADS_TOTAL=$(jq '.downloads.total' tmp.json)
+            ITEM=$(jq -n \
+              --arg repository "$REPO" \
+              --argjson downloads "$DOWNLOADS_TOTAL" \
+              '{repository: $repository, downloads: $downloads}')
+            REPO_JSON_ITEMS+=("$ITEM")
+            rm -rf tmp.json
+          done
+
+          mkdir -p data
+          printf '%s\n' "${REPO_JSON_ITEMS[@]}" | jq -s \
+            '{repositories: sort_by(.repository)}' > data/packagist.json
+
+          echo "Wrote data/packagist.json:"
+          cat data/packagist.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/packagist.json
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update packagist data"
+
+          # The other data workflows run on the same hourly cron and also push to main,
+          # so a push can be rejected if one of them committed first. Rebase onto the
+          # latest remote and retry a few times before giving up.
+          for ATTEMPT in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $ATTEMPT); rebasing on latest main and retrying"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push after multiple attempts"
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

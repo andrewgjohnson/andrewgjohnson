@@ -1,4 +1,4 @@
-name: Jekyll Theme Installs Badge and Report
+name: Jekyll Data
 
 on:
   schedule:
@@ -62,9 +62,9 @@ jobs:
             PAGE=1
             while true; do
               # Abort the whole job (rather than committing a bogus zero) if the search
-              # cannot be fetched, so the previously committed report/badge are preserved.
+              # cannot be fetched, so the previously committed data file is preserved.
               if ! RESPONSE=$(api_get "https://api.github.com/search/code?q=$ENCODED&per_page=100&page=$PAGE"); then
-                echo "::error::Code search failed for $THEME after retries; aborting without overwriting the existing report."
+                echo "::error::Code search failed for $THEME after retries; aborting without overwriting the existing data."
                 exit 1
               fi
 
@@ -87,28 +87,24 @@ jobs:
 
           # Keep the first match per repository + theme pair, then sort by repo name.
           DEDUPED=$(printf "%s" "$RESULTS" | awk -F'\t' 'NF && !seen[$1 FS $2]++' | sort -t$'\t' -k1,1)
-          TOTAL=$(printf "%s\n" "$DEDUPED" | grep -c . || true)
 
-          # Build one table per theme (in THEMES order), each preceded by an h1 that
-          # links to the theme's GitHub repo. The Project column deep-links to the line
-          # in the consumer repo that references the theme.
-          REPORT=""
+          # Build one object per theme (in THEMES order), each holding the consumer
+          # projects that reference it. The url deep-links to the line in the consumer
+          # repo that references the theme; pagesUrl is the published site.
+          THEME_JSON_ITEMS=()
           for THEME in "${THEMES[@]}"; do
             # Rows from the deduped set that use this theme (column 2 == theme).
             THEME_ROWS=$(printf "%s\n" "$DEDUPED" | awk -F'\t' -v t="$THEME" '$2 == t')
 
-            REPORT+="# [$THEME](https://github.com/$THEME)\n\n"
-            REPORT+="Project|URL\n-------|---\n"
-
-            THEME_TOTAL=0
+            PROJECT_JSON_ITEMS=()
             while IFS=$'\t' read -r REPO ROW_THEME URL; do
               [ -z "$REPO" ] && continue
               USERNAME=$(echo "$REPO" | cut -d'/' -f1)
               REPO_NAME=$(echo "$REPO" | cut -d'/' -f2)
 
-              # Link the URL column to the repository's GitHub Pages site. The Pages API
-              # returns the exact published URL (html_url), which already reflects a custom
-              # domain set via a root CNAME. If Pages info is unavailable, fall back to the
+              # Link the URL to the repository's GitHub Pages site. The Pages API returns
+              # the exact published URL (html_url), which already reflects a custom domain
+              # set via a root CNAME. If Pages info is unavailable, fall back to the
               # default *.github.io URL: a user/org site (repo named <user>.github.io) lives
               # at the domain root, everything else under the /<repo> project path.
               PAGES_URL=$(curl -s \
@@ -125,38 +121,74 @@ jobs:
                 fi
               fi
 
-              # The code search API only gives us the blob URL, so fetch the raw file and
-              # find the matching line to deep-link to it (e.g. .../_config.yml#L7).
+              # The code search html_url is pinned to the indexed commit SHA
+              # (.../blob/<sha>/...). Rewrite it to the repo's default branch for a clean,
+              # live link. Fall back to the original (SHA) URL if the branch is unknown.
+              DEFAULT_BRANCH=$(curl -s \
+                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/$REPO" | jq -r '.default_branch // empty')
+              if [ -n "$DEFAULT_BRANCH" ]; then
+                URL=$(echo "$URL" | sed -E "s#(/blob/)[^/]+/#\1$DEFAULT_BRANCH/#")
+              fi
+
+              # Fetch the raw file at that same ref and find the matching line so the
+              # deep-link anchor (e.g. .../_config.yml#L7) matches the live content.
               RAW_URL=$(echo "$URL" | sed -e 's#https://github.com/#https://raw.githubusercontent.com/#' -e 's#/blob/#/#')
               LINE=$(curl -sL -H "Authorization: token $GITHUB_TOKEN" "$RAW_URL" | grep -n -m1 -E "remote_theme:[[:space:]]*$THEME" | cut -d':' -f1)
               if [ -n "$LINE" ]; then
                 URL="$URL#L$LINE"
               fi
 
-              REPORT+="[$USERNAME/**$REPO_NAME**]($URL)|[$PAGES_URL]($PAGES_URL)\n"
-              THEME_TOTAL=$((THEME_TOTAL + 1))
+              PROJECT=$(jq -n \
+                --arg repository "$REPO" \
+                --arg url "$URL" \
+                --arg pagesUrl "$PAGES_URL" \
+                '{repository: $repository, url: $url, pagesUrl: $pagesUrl}')
+              PROJECT_JSON_ITEMS+=("$PROJECT")
             done <<< "$THEME_ROWS"
 
-            REPORT+="**Total installs**|**$THEME_TOTAL**\n\n"
+            if [ ${#PROJECT_JSON_ITEMS[@]} -gt 0 ]; then
+              PROJECTS=$(printf '%s\n' "${PROJECT_JSON_ITEMS[@]}" | jq -s 'sort_by(.repository)')
+            else
+              PROJECTS='[]'
+            fi
+            THEME_ITEM=$(jq -n \
+              --arg theme "$THEME" \
+              --argjson projects "$PROJECTS" \
+              '{theme: $theme, projects: $projects}')
+            THEME_JSON_ITEMS+=("$THEME_ITEM")
           done
 
-          echo -e "$REPORT" > JEKYLL.md
+          mkdir -p data
+          printf '%s\n' "${THEME_JSON_ITEMS[@]}" | jq -s \
+            '{themes: .}' > data/jekyll.json
 
-          BADGE_URL="https://raster.shields.io/badge/installs-${TOTAL}-0969da.png?colorA=1f2823&colorB=0969da&style=flat-square&logoColor=white&logo=jekyll"
-          echo "Downloading badge from URL: $BADGE_URL"
-          curl -L "$BADGE_URL" -o jekyll-badge.png
+          echo "Wrote data/jekyll.json:"
+          cat data/jekyll.json
 
       - name: Commit and push changes
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add JEKYLL.md
-          git add jekyll-badge.png
-          if [ -n "$(git status --porcelain)" ]; then
-            git commit -m "Update jekyll theme installs badge and report"
-            git push
-          else
+          git add data/jekyll.json
+          if [ -z "$(git status --porcelain)" ]; then
             echo "No changes to commit"
+            exit 0
           fi
+          git commit -m "Update jekyll data"
+
+          # The other data workflows run on the same hourly cron and also push to main,
+          # so a push can be rejected if one of them committed first. Rebase onto the
+          # latest remote and retry a few times before giving up.
+          for ATTEMPT in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $ATTEMPT); rebasing on latest main and retrying"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push after multiple attempts"
+          exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

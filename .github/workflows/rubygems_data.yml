@@ -1,0 +1,85 @@
+name: RubyGems Data
+
+on:
+  schedule:
+    - cron: '0 * * * *' # run hourly
+  workflow_dispatch: # allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  fetch-rubygems:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch RubyGems downloads
+        run: |
+          # Only the gem names need to be maintained here; the matching GitHub repository
+          # is read from each gem's RubyGems metadata (source/homepage URLs).
+          GEMS=(
+            "open-source-documentation-jekyll-theme"
+          )
+          REPO_JSON_ITEMS=()
+
+          for GEM in "${GEMS[@]}"; do
+            curl -s "https://rubygems.org/api/v1/gems/$GEM.json" -o tmp.json
+
+            # Pick the first GitHub URL among the gem's source/homepage fields and
+            # normalize it to owner/repo (stripping git+ prefixes, .git suffix, host, and
+            # any trailing slash or path).
+            REPO_URL=$(jq -r '[.source_code_uri, .homepage_uri, .metadata.source_code_uri, .metadata.homepage_uri] | map(select(. != null)) | map(select(test("github\\.com"))) | first // empty' tmp.json)
+            REPO=$(echo "$REPO_URL" \
+              | sed -E 's#^git\+##; s#\.git$##' \
+              | sed -E 's#^https?://github\.com/##; s#^git://github\.com/##; s#^git@github\.com:##; s#^github:##' \
+              | sed -E 's#^([^/]+/[^/]+).*#\1#')
+            if [ -z "$REPO" ]; then
+              echo "::warning::No GitHub repository found in RubyGems metadata for $GEM; falling back to gem name"
+              REPO="$GEM"
+            fi
+
+            DOWNLOADS_TOTAL=$(jq '.downloads' tmp.json)
+            ITEM=$(jq -n \
+              --arg repository "$REPO" \
+              --arg gem "$GEM" \
+              --argjson downloads "$DOWNLOADS_TOTAL" \
+              '{repository: $repository, gem: $gem, downloads: $downloads}')
+            REPO_JSON_ITEMS+=("$ITEM")
+            rm -rf tmp.json
+          done
+
+          mkdir -p data
+          printf '%s\n' "${REPO_JSON_ITEMS[@]}" | jq -s \
+            '{repositories: sort_by(.repository)}' > data/rubygems.json
+
+          echo "Wrote data/rubygems.json:"
+          cat data/rubygems.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/rubygems.json
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update rubygems data"
+
+          # The other data workflows run on the same hourly cron and also push to main,
+          # so a push can be rejected if one of them committed first. Rebase onto the
+          # latest remote and retry a few times before giving up.
+          for ATTEMPT in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $ATTEMPT); rebasing on latest main and retrying"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push after multiple attempts"
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

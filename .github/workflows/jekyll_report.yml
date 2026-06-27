@@ -1,0 +1,83 @@
+name: Jekyll Report
+
+on:
+  workflow_run:
+    workflows: ["Jekyll Data"]
+    types: [completed]
+  workflow_dispatch: # allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    # Only run for a manual dispatch or a successful data run.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main # always read the latest committed data file
+
+      - name: Generate report
+        run: |
+          # The report is built only from the committed data file; skip until it exists.
+          if [ ! -f data/jekyll.json ]; then
+            echo "::warning::data/jekyll.json not found yet; skipping report"
+            exit 0
+          fi
+
+          # Build one table per theme (in file order), each preceded by an h1 that links
+          # to the theme's GitHub repo. The Project column deep-links to the theme
+          # reference in the consumer repo; the URL column links to its published site.
+          # Both links come straight from the data file (computed by the data workflow).
+          REPORT=""
+          THEME_COUNT=$(jq '.themes | length' data/jekyll.json)
+          for i in $(seq 0 $((THEME_COUNT - 1))); do
+            THEME=$(jq -r ".themes[$i].theme" data/jekyll.json)
+            THEME_TOTAL=$(jq ".themes[$i].projects | length" data/jekyll.json)
+
+            REPORT+="# [$THEME](https://github.com/$THEME)\n\n"
+            REPORT+="Project|URL\n-------|---\n"
+
+            while IFS=$'\t' read -r REPO URL PAGES_URL; do
+              [ -z "$REPO" ] && continue
+              USERNAME=$(echo "$REPO" | cut -d'/' -f1)
+              REPO_NAME=$(echo "$REPO" | cut -d'/' -f2)
+              REPORT+="[$USERNAME/**$REPO_NAME**]($URL)|[$PAGES_URL]($PAGES_URL)\n"
+            done < <(jq -r ".themes[$i].projects[] | [.repository, .url, .pagesUrl] | @tsv" data/jekyll.json)
+
+            REPORT+="**Installs**|**$THEME_TOTAL**\n\n"
+          done
+
+          echo -e "$REPORT" > JEKYLL.md
+
+          echo "Wrote JEKYLL.md:"
+          cat JEKYLL.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add JEKYLL.md
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update jekyll report"
+
+          # Other workflows push to main on the same schedule, so a push can be rejected
+          # if one of them committed first. Rebase onto the latest remote and retry.
+          for ATTEMPT in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $ATTEMPT); rebasing on latest main and retrying"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push after multiple attempts"
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

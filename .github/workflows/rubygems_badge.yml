@@ -1,0 +1,64 @@
+name: RubyGems Badge
+
+on:
+  workflow_run:
+    workflows: ["RubyGems Data"]
+    types: [completed]
+  workflow_dispatch: # allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  build-badge:
+    runs-on: ubuntu-latest
+    # Only run for a manual dispatch or a successful data run.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main # always read the latest committed data file
+
+      - name: Build RubyGems downloads badge
+        run: |
+          # Thousands separators (printf "%'d") need a UTF-8 locale.
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen en_US.UTF-8
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+
+          TOTAL=$(jq '[.repositories[].downloads] | add // 0' data/rubygems.json)
+          FORMATTED=$(printf "%'d" "$TOTAL")
+
+          BADGE_URL="https://raster.shields.io/badge/downloads-${FORMATTED}-0969da.png?colorA=1f2823&colorB=0969da&style=flat-square&logoColor=white&logo=rubygems"
+          echo "Downloading badge from URL: $BADGE_URL"
+          mkdir -p badges
+          curl -L "$BADGE_URL" -o badges/rubygems.png
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add badges/rubygems.png
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update rubygems badge"
+
+          # Other workflows push to main on the same schedule, so a push can be rejected
+          # if one of them committed first. Rebase onto the latest remote and retry.
+          for ATTEMPT in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $ATTEMPT); rebasing on latest main and retrying"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push after multiple attempts"
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

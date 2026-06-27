@@ -1,0 +1,120 @@
+name: Downloads Report
+
+on:
+  workflow_run:
+    workflows: ["Packagist Data", "npm Data", "RubyGems Data"]
+    types: [completed]
+  workflow_dispatch: # allow manual triggering
+
+permissions:
+  contents: write
+
+jobs:
+  generate-report:
+    runs-on: ubuntu-latest
+    # Only run for a manual dispatch or a successful data run.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main # always read the latest committed data files
+
+      - name: Generate report
+        run: |
+          # Thousands separators (printf "%'d") need a UTF-8 locale.
+          sudo apt-get update
+          sudo apt-get install -y locales
+          sudo locale-gen en_US.UTF-8
+          export LC_ALL=en_US.UTF-8
+          export LANG=en_US.UTF-8
+
+          # The report is built only from the committed data files; skip until they exist.
+          for FILE in data/packagist.json data/npm.json data/rubygems.json; do
+            if [ ! -f "$FILE" ]; then
+              echo "::warning::$FILE not found yet; skipping report"
+              exit 0
+            fi
+          done
+
+          format_number() {
+            printf "%'d" "$1"
+          }
+
+          # Reads TSV on stdin (downloads<TAB>owner/repo<TAB>download_url) and emits the
+          # markdown table rows: [owner/**repo**](github)|[formatted_downloads](url)
+          render_rows() {
+            while IFS=$'\t' read -r DOWNLOADS REPO URL; do
+              [ -z "$REPO" ] && continue
+              FORMATTED=$(format_number "$DOWNLOADS")
+              REPO_BOLD=$(echo "$REPO" | sed -E 's|(.*)/(.*)|\1/**\2**|')
+              echo "[${REPO_BOLD}](https://github.com/${REPO})|[${FORMATTED}](${URL})"
+            done
+          }
+
+          TOTAL_PACKAGIST=$(jq '[.repositories[].downloads] | add // 0' data/packagist.json)
+          TOTAL_NPM=$(jq '[.repositories[].downloads] | add // 0' data/npm.json)
+          TOTAL_RUBYGEMS=$(jq '[.repositories[].downloads] | add // 0' data/rubygems.json)
+          GRAND_TOTAL=$((TOTAL_PACKAGIST + TOTAL_NPM + TOTAL_RUBYGEMS))
+
+          # Platform summary
+          echo "# Downloads" > DOWNLOADS.md
+          echo "Platform|Downloads" >> DOWNLOADS.md
+          echo "--------|---------" >> DOWNLOADS.md
+          echo "Packagist — *PHP*|$(format_number $TOTAL_PACKAGIST)" >> DOWNLOADS.md
+          echo "npm — *Javascript*|$(format_number $TOTAL_NPM)" >> DOWNLOADS.md
+          echo "RubyGems — *Ruby*|$(format_number $TOTAL_RUBYGEMS)" >> DOWNLOADS.md
+          echo "**Total**|**$(format_number $GRAND_TOTAL)**" >> DOWNLOADS.md
+
+          # Packagist (PHP)
+          echo "## Packagist — *PHP*" >> DOWNLOADS.md
+          echo "Project|Downloads" >> DOWNLOADS.md
+          echo "-------|---------" >> DOWNLOADS.md
+          jq -r '.repositories | sort_by(-.downloads)[] | [(.downloads|tostring), .repository, "https://packagist.org/packages/\(.repository)/stats"] | @tsv' data/packagist.json | render_rows >> DOWNLOADS.md
+          echo "**Total**|**$(format_number $TOTAL_PACKAGIST)**" >> DOWNLOADS.md
+          echo "" >> DOWNLOADS.md
+
+          # npm (Javascript)
+          echo "## npm — *Javascript*" >> DOWNLOADS.md
+          echo "Project|Downloads" >> DOWNLOADS.md
+          echo "-------|---------" >> DOWNLOADS.md
+          jq -r '.repositories | sort_by(-.downloads)[] | [(.downloads|tostring), .repository, "https://www.npmjs.com/package/\(.package)"] | @tsv' data/npm.json | render_rows >> DOWNLOADS.md
+          echo "**Total**|**$(format_number $TOTAL_NPM)**" >> DOWNLOADS.md
+          echo "" >> DOWNLOADS.md
+
+          # RubyGems (Ruby)
+          echo "## RubyGems — *Ruby*" >> DOWNLOADS.md
+          echo "Project|Downloads" >> DOWNLOADS.md
+          echo "-------|---------" >> DOWNLOADS.md
+          jq -r '.repositories | sort_by(-.downloads)[] | [(.downloads|tostring), .repository, "https://rubygems.org/gems/\(.gem)"] | @tsv' data/rubygems.json | render_rows >> DOWNLOADS.md
+          echo "**Total**|**$(format_number $TOTAL_RUBYGEMS)**" >> DOWNLOADS.md
+          echo "" >> DOWNLOADS.md
+
+          echo "Wrote DOWNLOADS.md:"
+          cat DOWNLOADS.md
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add DOWNLOADS.md
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Update downloads report"
+
+          # Other workflows push to main on the same schedule, so a push can be rejected
+          # if one of them committed first. Rebase onto the latest remote and retry.
+          for ATTEMPT in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rejected (attempt $ATTEMPT); rebasing on latest main and retrying"
+            git pull --rebase origin main
+          done
+          echo "::error::Failed to push after multiple attempts"
+          exit 1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
