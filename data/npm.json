@@ -6,6 +6,11 @@
       "downloads": 218
     },
     {
+      "repository": "agjjQuery/coding-style",
+      "package": "@agjjquery/coding-style",
+      "downloads": 69
+    },
+    {
       "repository": "andrewgjohnson/agjCalendar",
       "package": "agjcalendar",
       "downloads": 633
