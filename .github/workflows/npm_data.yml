@@ -24,6 +24,7 @@ jobs:
             "agjcalendar"
             "eslint-config-google-jsdocless"
             "@agjjquery/agjjquery"
+            "@agjjquery/coding-style"
           )
           REPO_JSON_ITEMS=()
           END_DATE=$(date +"%Y-%m-%d")
