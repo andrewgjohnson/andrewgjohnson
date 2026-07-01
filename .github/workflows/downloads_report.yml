@@ -63,7 +63,7 @@ jobs:
           echo "Platform|Downloads" >> DOWNLOADS.md
           echo "--------|---------" >> DOWNLOADS.md
           echo "Packagist — *PHP*|$(format_number $TOTAL_PACKAGIST)" >> DOWNLOADS.md
-          echo "npm — *Javascript*|$(format_number $TOTAL_NPM)" >> DOWNLOADS.md
+          echo "npm — *JavaScript*|$(format_number $TOTAL_NPM)" >> DOWNLOADS.md
           echo "RubyGems — *Ruby*|$(format_number $TOTAL_RUBYGEMS)" >> DOWNLOADS.md
           echo "**Total**|**$(format_number $GRAND_TOTAL)**" >> DOWNLOADS.md
 
@@ -75,8 +75,8 @@ jobs:
           echo "**Total**|**$(format_number $TOTAL_PACKAGIST)**" >> DOWNLOADS.md
           echo "" >> DOWNLOADS.md
 
-          # npm (Javascript)
-          echo "## npm — *Javascript*" >> DOWNLOADS.md
+          # npm (JavaScript)
+          echo "## npm — *JavaScript*" >> DOWNLOADS.md
           echo "Project|Downloads" >> DOWNLOADS.md
           echo "-------|---------" >> DOWNLOADS.md
           jq -r '.repositories | sort_by(-.downloads)[] | [(.downloads|tostring), .repository, "https://www.npmjs.com/package/\(.package)"] | @tsv' data/npm.json | render_rows >> DOWNLOADS.md
