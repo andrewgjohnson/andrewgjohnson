@@ -2,7 +2,7 @@
 Platform|Downloads
 --------|---------
 Packagist — *PHP*|309,965
-npm — *Javascript*|1,416
+npm — *JavaScript*|1,416
 RubyGems — *Ruby*|245
 **Total**|**311,626**
 ## Packagist — *PHP*
@@ -17,7 +17,7 @@ Project|Downloads
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[9](https://packagist.org/packages/agjgd/agjgd/stats)
 **Total**|**309,965**
 
-## npm — *Javascript*
+## npm — *JavaScript*
 Project|Downloads
 -------|---------
 [andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[633](https://www.npmjs.com/package/agjcalendar)
@@ -31,4 +31,3 @@ Project|Downloads
 -------|---------
 [andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme)|[245](https://rubygems.org/gems/open-source-documentation-jekyll-theme)
 **Total**|**245**
-
