@@ -10,7 +10,7 @@
 Visit [**andrewgjohnson.com**](https://www.andrewgjohnson.com/) for more information about me
 
 [![Packagist Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/packagist.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md#packagist--php)
-[![npm Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/npm.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md#npm--javascript)
+[![npm Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/npm.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md#npm--typescript--javascript)
 [![RubyGems Downloads](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/rubygems.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/DOWNLOADS.md#rubygems--ruby)
 [![Jekyll Theme Installs](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/jekyll.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/JEKYLL.md)
 [![Stargazers](https://raw.githubusercontent.com/andrewgjohnson/andrewgjohnson/main/badges/stargazers.png)](https://github.com/andrewgjohnson/andrewgjohnson/blob/main/STARGAZERS.md)
