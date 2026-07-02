@@ -23,6 +23,7 @@ jobs:
             "agjjQuery/agjjQuery"
             "agjjQuery/coding-style"
             "andrewgjohnson/agjCalendar"
+            "andrewgjohnson/agjVersionless"
             "andrewgjohnson/andrewgjohnson"
             "andrewgjohnson/eslint-config-google-jsdocless"
             "andrewgjohnson/imageblendedcolorallocate"
