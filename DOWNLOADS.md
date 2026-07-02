@@ -2,7 +2,7 @@
 Platform|Downloads
 --------|---------
 Packagist — *PHP*|310,954
-npm — *JavaScript*|1,425
+npm — *TypeScript & JavaScript*|1,425
 RubyGems — *Ruby*|259
 **Total**|**312,638**
 ## Packagist — *PHP*
@@ -17,7 +17,7 @@ Project|Downloads
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[9](https://packagist.org/packages/agjgd/agjgd/stats)
 **Total**|**310,954**
 
-## npm — *JavaScript*
+## npm — *TypeScript & JavaScript*
 Project|Downloads
 -------|---------
 [andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[633](https://www.npmjs.com/package/agjcalendar)
