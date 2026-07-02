@@ -7,6 +7,7 @@ Project|Stargazers
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[1](https://github.com/agjgd/agjgd/stargazers)
 [agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[1](https://github.com/agjjQuery/agjjQuery/stargazers)
 [agjjQuery/**coding-style**](https://github.com/agjjQuery/coding-style)|[1](https://github.com/agjjQuery/coding-style/stargazers)
+[andrewgjohnson/**agjVersionless**](https://github.com/andrewgjohnson/agjVersionless)|[1](https://github.com/andrewgjohnson/agjVersionless/stargazers)
 [andrewgjohnson/**andrewgjohnson**](https://github.com/andrewgjohnson/andrewgjohnson)|[1](https://github.com/andrewgjohnson/andrewgjohnson/stargazers)
 [andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[1](https://github.com/andrewgjohnson/eslint-config-google-jsdocless/stargazers)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[1](https://github.com/andrewgjohnson/imageblendedcolorallocate/stargazers)
@@ -15,5 +16,4 @@ Project|Stargazers
 [andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme)|[1](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme/stargazers)
 [andrewgjohnson/**www.andrewgjohnson.com**](https://github.com/andrewgjohnson/www.andrewgjohnson.com)|[1](https://github.com/andrewgjohnson/www.andrewgjohnson.com/stargazers)
 [createtoconvert/**www.createtoconvert.com**](https://github.com/createtoconvert/www.createtoconvert.com)|[1](https://github.com/createtoconvert/www.createtoconvert.com/stargazers)
-[andrewgjohnson/**agjVersionless**](https://github.com/andrewgjohnson/agjVersionless)|[0](https://github.com/andrewgjohnson/agjVersionless/stargazers)
 **Unique stargazers**|**36**
