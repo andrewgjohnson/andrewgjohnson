@@ -17,6 +17,16 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Fetch stargazers total
+        env:
+          # The built-in GITHUB_TOKEN is an installation token scoped to this
+          # repository, so it can no longer read the stargazers of the other
+          # repositories and returns "403 Resource not accessible by
+          # integration". Provide a Personal Access Token (classic token with
+          # the public_repo scope, or a fine-grained token with read access) as
+          # the STARGAZERS_TOKEN secret to get the authenticated rate limit. If
+          # it is absent we fall back to unauthenticated requests, which still
+          # work because the stargazers endpoint is public.
+          STARGAZERS_TOKEN: ${{ secrets.STARGAZERS_TOKEN }}
         run: |
           REPOS=(
             "agjgd/agjgd"
@@ -36,35 +46,67 @@ jobs:
             "andrewgjohnson/www.andrewgjohnson.com"
             "createtoconvert/www.createtoconvert.com"
           )
+
+          # Only send an Authorization header when a token is available.
+          AUTH_HEADER=()
+          if [ -n "$STARGAZERS_TOKEN" ]; then
+            AUTH_HEADER=(-H "Authorization: token $STARGAZERS_TOKEN")
+          fi
+
+          # Load the previously recorded values so a transient API failure
+          # preserves them instead of overwriting good data with zeros.
+          declare -A PREV_STARS
+          PREV_UNIQUE=0
+          if [ -f data/stargazers.json ]; then
+            while IFS=$'\t' read -r repo stars; do
+              PREV_STARS["$repo"]=$stars
+            done < <(jq -r '.repositories[] | "\(.repository)\t\(.stargazers)"' data/stargazers.json)
+            PREV_UNIQUE=$(jq -r '.uniqueStargazers // 0' data/stargazers.json)
+          fi
+
           UNIQUE_IDS=()
           REPO_STARGAZERS=()
+          FAILED=0
 
           for REPO in "${REPOS[@]}"; do
             PAGE=1
             STARGAZERS=0
+            FETCH_FAILED=false
             while true; do
-              RESPONSE=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/$REPO/stargazers?per_page=100&page=$PAGE")
-              if echo $RESPONSE | jq -e 'type == "array"' > /dev/null; then
-                IDS=$(echo $RESPONSE | jq '.[].id')
-                if [ -z "$IDS" ]; then
+              RESPONSE=$(curl -s "${AUTH_HEADER[@]}" "https://api.github.com/repos/$REPO/stargazers?per_page=100&page=$PAGE")
+              if echo "$RESPONSE" | jq -e 'type == "array"' > /dev/null 2>&1; then
+                COUNT=$(echo "$RESPONSE" | jq 'length')
+                if [ "$COUNT" -eq 0 ]; then
                   break
                 fi
-                for ID in $IDS; do
+                for ID in $(echo "$RESPONSE" | jq '.[].id'); do
                   STARGAZERS=$((STARGAZERS + 1))
                   if [[ ! " ${UNIQUE_IDS[@]} " =~ " ${ID} " ]]; then
                     UNIQUE_IDS+=("$ID")
                   fi
                 done
-                if [ $(echo $RESPONSE | jq '. | length') -lt 5 ]; then
+                # per_page is 100, so a short page means this was the last one.
+                if [ "$COUNT" -lt 100 ]; then
                   break
                 fi
                 PAGE=$((PAGE + 1))
               else
-                echo "Error or no stargazers found for $REPO"
+                MESSAGE=$(echo "$RESPONSE" | jq -r '.message // "unexpected response"' 2>/dev/null || echo "unexpected response")
+                echo "::warning::Failed to fetch stargazers for $REPO: $MESSAGE"
+                FETCH_FAILED=true
                 break
               fi
             done
-            REPO_STARGAZERS+=("$REPO $STARGAZERS")
+
+            if [ "$FETCH_FAILED" = true ]; then
+              # Keep the previous value rather than clobbering it with 0.
+              PREV=${PREV_STARS["$REPO"]:-0}
+              echo "Preserving previous value for $REPO: $PREV"
+              REPO_STARGAZERS+=("$REPO $PREV")
+              FAILED=$((FAILED + 1))
+            else
+              REPO_STARGAZERS+=("$REPO $STARGAZERS")
+            fi
           done
 
           # Sort REPO_STARGAZERS array by repository name (first field)
@@ -83,7 +125,14 @@ jobs:
             REPO_JSON_ITEMS+=("$ITEM")
           done
 
-          UNIQUE_STARGAZERS=${#UNIQUE_IDS[@]}
+          # The unique stargazer count is only reliable when every repository
+          # was fetched successfully; otherwise keep the previous total so a
+          # partial run does not undercount it.
+          if [ "$FAILED" -eq 0 ]; then
+            UNIQUE_STARGAZERS=${#UNIQUE_IDS[@]}
+          else
+            UNIQUE_STARGAZERS=$PREV_UNIQUE
+          fi
 
           mkdir -p data
           printf '%s\n' "${REPO_JSON_ITEMS[@]}" | jq -s \
@@ -93,7 +142,11 @@ jobs:
           echo "Wrote data/stargazers.json:"
           cat data/stargazers.json
 
+          # Expose the failure count to later steps.
+          echo "FAILED_REPOS=$FAILED" >> "$GITHUB_ENV"
+
       - name: Commit and push changes
+        if: always()
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -118,3 +171,11 @@ jobs:
           exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fail if any repositories could not be fetched
+        if: always()
+        run: |
+          if [ "${FAILED_REPOS:-0}" -gt 0 ]; then
+            echo "::error::$FAILED_REPOS repositor(y/ies) could not be fetched; their previous values were preserved."
+            exit 1
+          fi
