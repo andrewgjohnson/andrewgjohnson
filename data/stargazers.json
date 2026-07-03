@@ -2,23 +2,23 @@
   "repositories": [
     {
       "repository": "agjgd/agjgd",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "agjjQuery/agjjQuery",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "agjjQuery/coding-style",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/agjCalendar",
-      "stargazers": 3
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/agjVersionless",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/andrewgjohnson",
@@ -26,44 +26,44 @@
     },
     {
       "repository": "andrewgjohnson/eslint-config-google-jsdocless",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/imageblendedcolorallocate",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/imagecolorallocatefromstring",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/imagegradientrectangle",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/imagettftextblur",
-      "stargazers": 27
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/imagettftextgradient",
-      "stargazers": 4
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/linebreaks4imagettftext",
-      "stargazers": 5
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/open-source-documentation-jekyll-theme",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "andrewgjohnson/www.andrewgjohnson.com",
-      "stargazers": 1
+      "stargazers": 0
     },
     {
       "repository": "createtoconvert/www.createtoconvert.com",
-      "stargazers": 1
+      "stargazers": 0
     }
   ],
-  "uniqueStargazers": 36
+  "uniqueStargazers": 1
 }
