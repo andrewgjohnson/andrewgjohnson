@@ -4,6 +4,11 @@
       "theme": "andrewgjohnson/open-source-documentation-jekyll-theme",
       "projects": [
         {
+          "repository": "agjgd/agjgd",
+          "url": "https://github.com/agjgd/agjgd/blob/master/_config.yml#L5",
+          "pagesUrl": "https://agjgd.org/"
+        },
+        {
           "repository": "agjjQuery/agjjQuery",
           "url": "https://github.com/agjjQuery/agjjQuery/blob/main/_config.yml#L5",
           "pagesUrl": "https://agjjquery.org/"
