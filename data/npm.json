@@ -8,7 +8,7 @@
     {
       "repository": "agjjQuery/coding-style",
       "package": "@agjjquery/coding-style",
-      "downloads": 94
+      "downloads": 95
     },
     {
       "repository": "andrewgjohnson/agjCalendar",
@@ -18,7 +18,7 @@
     {
       "repository": "andrewgjohnson/agjVersionless",
       "package": "@agjjquery/agjversionless",
-      "downloads": 150
+      "downloads": 152
     },
     {
       "repository": "andrewgjohnson/eslint-config-google-jsdocless",
