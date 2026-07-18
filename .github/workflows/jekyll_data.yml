@@ -24,22 +24,39 @@ jobs:
           # (HTTP 200 + valid JSON) and returns non-zero once retries are exhausted. The
           # code search API throws transient 403/429 secondary-rate-limit and 5xx errors
           # (sometimes with an empty/non-JSON body) under load, so a single bad response
-          # must not be mistaken for "no results". Backoff grows with each attempt.
+          # must not be mistaken for "no results".
+          #
+          # On a rate-limited response GitHub tells us how long to wait, so honour that
+          # rather than guessing: prefer the Retry-After header, fall back to the reset
+          # time in x-ratelimit-reset, and only fall back to exponential backoff when
+          # neither is present. The wait is capped so a single run can't stall forever.
           api_get() {
-            local url="$1" attempt=1 max=5 resp code body
+            local url="$1" attempt=1 max=6 code body wait reset now hdr=/tmp/api_headers.txt
             while [ "$attempt" -le "$max" ]; do
-              resp=$(curl -s -w $'\n%{http_code}' \
+              body=$(curl -s -D "$hdr" \
                 -H "Authorization: token $GITHUB_TOKEN" \
                 -H "Accept: application/vnd.github+json" \
                 "$url")
-              code=$(printf '%s' "$resp" | tail -n1)
-              body=$(printf '%s' "$resp" | sed '$d')
+              code=$(awk 'toupper($1) ~ /^HTTP/ {c=$2} END {print c}' "$hdr")
               if [ "$code" = "200" ] && printf '%s' "$body" | jq -e . > /dev/null 2>&1; then
                 printf '%s' "$body"
                 return 0
               fi
-              echo "GitHub API $url -> HTTP $code (attempt $attempt/$max); retrying" >&2
-              sleep $((attempt * 15))
+
+              # How long to sleep before the next attempt.
+              wait=$(grep -i '^retry-after:' "$hdr" | tr -dc '0-9')
+              if [ -z "$wait" ]; then
+                reset=$(grep -i '^x-ratelimit-reset:' "$hdr" | tr -dc '0-9')
+                now=$(date +%s)
+                [ -n "$reset" ] && wait=$((reset - now))
+              fi
+              if [ -z "$wait" ] || [ "$wait" -lt 1 ]; then
+                wait=$((attempt * 30)) # no guidance from GitHub; exponential-ish backoff
+              fi
+              [ "$wait" -gt 120 ] && wait=120 # cap a single sleep at two minutes
+
+              echo "GitHub API $url -> HTTP $code (attempt $attempt/$max); sleeping ${wait}s" >&2
+              sleep "$wait"
               attempt=$((attempt + 1))
             done
             return 1
@@ -61,11 +78,12 @@ jobs:
 
             PAGE=1
             while true; do
-              # Abort the whole job (rather than committing a bogus zero) if the search
-              # cannot be fetched, so the previously committed data file is preserved.
+              # If the search cannot be fetched (e.g. sustained 429 rate limiting), skip
+              # this run rather than failing: the previously committed data file is left
+              # untouched, so a transient rate limit doesn't turn the workflow red.
               if ! RESPONSE=$(api_get "https://api.github.com/search/code?q=$ENCODED&per_page=100&page=$PAGE"); then
-                echo "::error::Code search failed for $THEME after retries; aborting without overwriting the existing data."
-                exit 1
+                echo "::warning::Code search failed for $THEME after retries; skipping this run and preserving the existing data."
+                exit 0
               fi
 
               # Exclude matches inside .github/workflows (e.g. this workflow's own
