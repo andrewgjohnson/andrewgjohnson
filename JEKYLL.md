@@ -2,8 +2,8 @@
 
 Project|URL
 -------|---
-[agjgd/**agjgd**](https://github.com/agjgd/agjgd/blob/master/_config.yml#L5)|[https://agjgd.org/](https://agjgd.org/)
 [agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery/blob/main/_config.yml#L5)|[https://agjjquery.org/](https://agjjquery.org/)
+[andrewgjohnson/**AgjGd**](https://github.com/andrewgjohnson/AgjGd/blob/master/_config.yml#L5)|[https://agjgd.org/](https://agjgd.org/)
 [andrewgjohnson/**agjVersionless**](https://github.com/andrewgjohnson/agjVersionless/blob/main/_config.yml#L5)|[https://agjversionless.agjjquery.org/](https://agjversionless.agjjquery.org/)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate/blob/master/_config.yml#L5)|[https://imageblendedcolorallocate.agjgd.org/](https://imageblendedcolorallocate.agjgd.org/)
 [andrewgjohnson/**imagecolorallocatefromstring**](https://github.com/andrewgjohnson/imagecolorallocatefromstring/blob/master/_config.yml#L5)|[https://imagecolorallocatefromstring.agjgd.org/](https://imagecolorallocatefromstring.agjgd.org/)
