@@ -29,12 +29,12 @@ jobs:
           STARGAZERS_TOKEN: ${{ secrets.STARGAZERS_TOKEN }}
         run: |
           REPOS=(
-            "agjgd/agjgd"
             "agjjQuery/agjjQuery"
             "agjjQuery/coding-style"
             "andrewgjohnson/agjCalendar"
             "andrewgjohnson/agjVersionless"
             "andrewgjohnson/andrewgjohnson"
+            "andrewgjohnson/AgjGd"
             "andrewgjohnson/eslint-config-google-jsdocless"
             "andrewgjohnson/imageblendedcolorallocate"
             "andrewgjohnson/imagecolorallocatefromstring"
