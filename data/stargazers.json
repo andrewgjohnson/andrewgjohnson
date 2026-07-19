@@ -1,15 +1,15 @@
 {
   "repositories": [
     {
-      "repository": "agjgd/agjgd",
-      "stargazers": 1
-    },
-    {
       "repository": "agjjQuery/agjjQuery",
       "stargazers": 1
     },
     {
       "repository": "agjjQuery/coding-style",
+      "stargazers": 1
+    },
+    {
+      "repository": "andrewgjohnson/AgjGd",
       "stargazers": 1
     },
     {
