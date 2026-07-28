@@ -1,21 +1,21 @@
 # Downloads
 Platform|Downloads
 --------|---------
-Packagist — *PHP*|321,639
+Packagist — *PHP*|321,654
 npm — *TypeScript & JavaScript*|1,746
 RubyGems — *Ruby*|307
-**Total**|**323,692**
+**Total**|**323,707**
 ## Packagist — *PHP*
 Project|Downloads
 -------|---------
-[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[259,116](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
-[andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[61,893](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
-[andrewgjohnson/**imagettftextgradient**](https://github.com/andrewgjohnson/imagettftextgradient)|[518](https://packagist.org/packages/andrewgjohnson/imagettftextgradient/stats)
+[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[259,120](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
+[andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[61,903](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
+[andrewgjohnson/**imagettftextgradient**](https://github.com/andrewgjohnson/imagettftextgradient)|[519](https://packagist.org/packages/andrewgjohnson/imagettftextgradient/stats)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[60](https://packagist.org/packages/andrewgjohnson/imageblendedcolorallocate/stats)
 [andrewgjohnson/**imagegradientrectangle**](https://github.com/andrewgjohnson/imagegradientrectangle)|[26](https://packagist.org/packages/andrewgjohnson/imagegradientrectangle/stats)
 [andrewgjohnson/**imagecolorallocatefromstring**](https://github.com/andrewgjohnson/imagecolorallocatefromstring)|[17](https://packagist.org/packages/andrewgjohnson/imagecolorallocatefromstring/stats)
 [agjgd/**agjgd**](https://github.com/agjgd/agjgd)|[9](https://packagist.org/packages/agjgd/agjgd/stats)
-**Total**|**321,639**
+**Total**|**321,654**
 
 ## npm — *TypeScript & JavaScript*
 Project|Downloads
