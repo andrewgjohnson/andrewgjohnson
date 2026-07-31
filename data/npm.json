@@ -3,7 +3,7 @@
     {
       "repository": "agjjQuery/agjjQuery",
       "package": "@agjjquery/agjjquery",
-      "downloads": 220
+      "downloads": 217
     },
     {
       "repository": "agjjQuery/coding-style",
@@ -13,7 +13,7 @@
     {
       "repository": "andrewgjohnson/agjCalendar",
       "package": "agjcalendar",
-      "downloads": 683
+      "downloads": 669
     },
     {
       "repository": "andrewgjohnson/agjVersionless",
@@ -23,7 +23,7 @@
     {
       "repository": "andrewgjohnson/eslint-config-google-jsdocless",
       "package": "eslint-config-google-jsdocless",
-      "downloads": 503
+      "downloads": 500
     }
   ]
 }
