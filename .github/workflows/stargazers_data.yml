@@ -64,7 +64,7 @@ jobs:
             PREV_UNIQUE=$(jq -r '.uniqueStargazers // 0' data/stargazers.json)
           fi
 
-          UNIQUE_IDS=()
+          declare -A SEEN
           REPO_STARGAZERS=()
           FAILED=0
 
@@ -81,9 +81,7 @@ jobs:
                 fi
                 for ID in $(echo "$RESPONSE" | jq '.[].id'); do
                   STARGAZERS=$((STARGAZERS + 1))
-                  if [[ ! " ${UNIQUE_IDS[@]} " =~ " ${ID} " ]]; then
-                    UNIQUE_IDS+=("$ID")
-                  fi
+                  SEEN[$ID]=1
                 done
                 # per_page is 100, so a short page means this was the last one.
                 if [ "$COUNT" -lt 100 ]; then
@@ -129,7 +127,7 @@ jobs:
           # was fetched successfully; otherwise keep the previous total so a
           # partial run does not undercount it.
           if [ "$FAILED" -eq 0 ]; then
-            UNIQUE_STARGAZERS=${#UNIQUE_IDS[@]}
+            UNIQUE_STARGAZERS=${#SEEN[@]}
           else
             UNIQUE_STARGAZERS=$PREV_UNIQUE
           fi
