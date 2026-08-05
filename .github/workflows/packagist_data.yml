@@ -21,7 +21,7 @@ jobs:
           # On Packagist the package name is the GitHub repo name (owner/repo), so a
           # single flat list serves as both.
           REPOS=(
-            "agjgd/agjgd"
+            "andrewgjohnson/agjgd"
             "andrewgjohnson/imageblendedcolorallocate"
             "andrewgjohnson/imagecolorallocatefromstring"
             "andrewgjohnson/imagegradientrectangle"
