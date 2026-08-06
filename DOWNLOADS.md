@@ -1,10 +1,10 @@
 # Downloads
 Platform|Downloads
 --------|---------
-Packagist — *PHP*|322,384
+Packagist — *PHP*|322,394
 npm — *TypeScript & JavaScript*|1,745
-RubyGems — *Ruby*|311
-**Total**|**324,440**
+RubyGems — *Ruby*|312
+**Total**|**324,451**
 ## Packagist — *PHP*
 Project|Downloads
 -------|---------
@@ -14,8 +14,8 @@ Project|Downloads
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[61](https://packagist.org/packages/andrewgjohnson/imageblendedcolorallocate/stats)
 [andrewgjohnson/**imagegradientrectangle**](https://github.com/andrewgjohnson/imagegradientrectangle)|[27](https://packagist.org/packages/andrewgjohnson/imagegradientrectangle/stats)
 [andrewgjohnson/**imagecolorallocatefromstring**](https://github.com/andrewgjohnson/imagecolorallocatefromstring)|[18](https://packagist.org/packages/andrewgjohnson/imagecolorallocatefromstring/stats)
-[andrewgjohnson/**agjgd**](https://github.com/andrewgjohnson/agjgd)|[2](https://packagist.org/packages/andrewgjohnson/agjgd/stats)
-**Total**|**322,384**
+[andrewgjohnson/**agjgd**](https://github.com/andrewgjohnson/agjgd)|[12](https://packagist.org/packages/andrewgjohnson/agjgd/stats)
+**Total**|**322,394**
 
 ## npm — *TypeScript & JavaScript*
 Project|Downloads
@@ -30,6 +30,6 @@ Project|Downloads
 ## RubyGems — *Ruby*
 Project|Downloads
 -------|---------
-[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme)|[311](https://rubygems.org/gems/open-source-documentation-jekyll-theme)
-**Total**|**311**
+[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme)|[312](https://rubygems.org/gems/open-source-documentation-jekyll-theme)
+**Total**|**312**
 
