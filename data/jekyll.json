@@ -19,11 +19,6 @@
           "pagesUrl": "https://agjversionless.agjjquery.org/"
         },
         {
-          "repository": "andrewgjohnson/imageblendedcolorallocate",
-          "url": "https://github.com/andrewgjohnson/imageblendedcolorallocate/blob/master/_config.yml#L5",
-          "pagesUrl": "https://imageblendedcolorallocate.agjgd.org/"
-        },
-        {
           "repository": "andrewgjohnson/imagecolorallocatefromstring",
           "url": "https://github.com/andrewgjohnson/imagecolorallocatefromstring/blob/master/_config.yml#L5",
           "pagesUrl": "https://imagecolorallocatefromstring.agjgd.org/"
@@ -37,11 +32,6 @@
           "repository": "andrewgjohnson/imagettftextblur",
           "url": "https://github.com/andrewgjohnson/imagettftextblur/blob/master/_config.yml#L5",
           "pagesUrl": "https://imagettftextblur.agjgd.org/"
-        },
-        {
-          "repository": "andrewgjohnson/imagettftextgradient",
-          "url": "https://github.com/andrewgjohnson/imagettftextgradient/blob/master/_config.yml#L5",
-          "pagesUrl": "https://imagettftextgradient.agjgd.org/"
         },
         {
           "repository": "andrewgjohnson/linebreaks4imagettftext",
