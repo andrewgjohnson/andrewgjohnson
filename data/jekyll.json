@@ -19,6 +19,11 @@
           "pagesUrl": "https://agjversionless.agjjquery.org/"
         },
         {
+          "repository": "andrewgjohnson/imageblendedcolorallocate",
+          "url": "https://github.com/andrewgjohnson/imageblendedcolorallocate/blob/master/_config.yml#L5",
+          "pagesUrl": "https://imageblendedcolorallocate.agjgd.org/"
+        },
+        {
           "repository": "andrewgjohnson/imagecolorallocatefromstring",
           "url": "https://github.com/andrewgjohnson/imagecolorallocatefromstring/blob/master/_config.yml#L5",
           "pagesUrl": "https://imagecolorallocatefromstring.agjgd.org/"
