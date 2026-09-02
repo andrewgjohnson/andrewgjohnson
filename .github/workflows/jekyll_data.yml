@@ -39,8 +39,16 @@ jobs:
                 "$url")
               code=$(awk 'toupper($1) ~ /^HTTP/ {c=$2} END {print c}' "$hdr")
               if [ "$code" = "200" ] && printf '%s' "$body" | jq -e . > /dev/null 2>&1; then
-                printf '%s' "$body"
-                return 0
+                # A code search that timed out server-side still answers 200, but it sets
+                # incomplete_results and returns a truncated (sometimes empty) item list.
+                # Treat that like any other transient failure and retry, otherwise a partial
+                # answer gets committed as if it were the full picture.
+                if printf '%s' "$body" | jq -e '.incomplete_results == true' > /dev/null 2>&1; then
+                  echo "GitHub API $url -> HTTP 200 with incomplete_results=true (attempt $attempt/$max); retrying" >&2
+                else
+                  printf '%s' "$body"
+                  return 0
+                fi
               fi
 
               # How long to sleep before the next attempt.
@@ -105,6 +113,32 @@ jobs:
 
           # Keep the first match per repository + theme pair, then sort by repo name.
           DEDUPED=$(printf "%s" "$RESULTS" | awk -F'\t' 'NF && !seen[$1 FS $2]++' | sort -t$'\t' -k1,1)
+
+          # A search can "succeed" and still be wrong: the code search index is rebuilt
+          # continuously, and mid-rebuild the API answers HTTP 200 with a perfectly valid
+          # { "total_count": 0, "items": [] } body. Nothing about the shape of that response
+          # distinguishes it from a genuine "no installs" result, so the retry logic above
+          # never fires and the empty answer would be committed, wiping the theme's project
+          # list and taking the report and badge to zero with it.
+          #
+          # A theme does not lose every consumer at once, so "some" -> "none" is treated as
+          # an API failure rather than data: warn, leave the committed file untouched and
+          # let the next hourly run pick it up.
+          for THEME in "${THEMES[@]}"; do
+            NEW_COUNT=$(printf "%s\n" "$DEDUPED" | awk -F'\t' -v t="$THEME" '$2 == t && NF {n++} END {print n+0}')
+
+            PREVIOUS_COUNT=0
+            if [ -f data/jekyll.json ]; then
+              PREVIOUS_COUNT=$(jq -r --arg theme "$THEME" \
+                '[.themes[]? | select(.theme == $theme) | .projects | length] | add // 0' \
+                data/jekyll.json 2>/dev/null || echo 0)
+            fi
+
+            if [ "$NEW_COUNT" -eq 0 ] && [ "$PREVIOUS_COUNT" -gt 0 ]; then
+              echo "::warning::Code search returned no results for $THEME but $PREVIOUS_COUNT project(s) are on record; treating this as a transient API failure and preserving the existing data."
+              exit 0
+            fi
+          done
 
           # Build one object per theme (in THEMES order), each holding the consumer
           # projects that reference it. The url deep-links to the line in the consumer
