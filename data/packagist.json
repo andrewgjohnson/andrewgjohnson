@@ -1,32 +1,32 @@
 {
   "repositories": [
     {
-      "repository": "agjgd/agjgd",
-      "downloads": 9
+      "repository": "andrewgjohnson/agjgd",
+      "downloads": 78
     },
     {
       "repository": "andrewgjohnson/imageblendedcolorallocate",
-      "downloads": 60
+      "downloads": 64
     },
     {
       "repository": "andrewgjohnson/imagecolorallocatefromstring",
-      "downloads": 17
+      "downloads": 24
     },
     {
       "repository": "andrewgjohnson/imagegradientrectangle",
-      "downloads": 26
+      "downloads": 32
     },
     {
       "repository": "andrewgjohnson/imagettftextblur",
-      "downloads": 259342
+      "downloads": 259840
     },
     {
       "repository": "andrewgjohnson/imagettftextgradient",
-      "downloads": 521
+      "downloads": 526
     },
     {
       "repository": "andrewgjohnson/linebreaks4imagettftext",
-      "downloads": 62304
+      "downloads": 64333
     }
   ]
 }
