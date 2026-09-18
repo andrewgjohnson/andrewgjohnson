@@ -3,8 +3,8 @@ Platform|Downloads
 --------|---------
 Packagist — *PHP*|326,725
 npm — *TypeScript & JavaScript*|1,988
-RubyGems — *Ruby*|337
-**Total**|**329,050**
+RubyGems — *Ruby*|338
+**Total**|**329,051**
 ## Packagist — *PHP*
 Project|Downloads
 -------|---------
@@ -30,6 +30,6 @@ Project|Downloads
 ## RubyGems — *Ruby*
 Project|Downloads
 -------|---------
-[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme)|[337](https://rubygems.org/gems/open-source-documentation-jekyll-theme)
-**Total**|**337**
+[andrewgjohnson/**open-source-documentation-jekyll-theme**](https://github.com/andrewgjohnson/open-source-documentation-jekyll-theme)|[338](https://rubygems.org/gems/open-source-documentation-jekyll-theme)
+**Total**|**338**
 
