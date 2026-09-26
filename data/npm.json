@@ -3,12 +3,12 @@
     {
       "repository": "agjjQuery/agjjQuery",
       "package": "@agjjquery/agjjquery",
-      "downloads": 223
+      "downloads": 224
     },
     {
       "repository": "agjjQuery/coding-style",
       "package": "@agjjquery/coding-style",
-      "downloads": 145
+      "downloads": 146
     },
     {
       "repository": "andrewgjohnson/agjCalendar",
@@ -18,12 +18,12 @@
     {
       "repository": "andrewgjohnson/agjVersionless",
       "package": "@agjjquery/agjversionless",
-      "downloads": 283
+      "downloads": 284
     },
     {
       "repository": "andrewgjohnson/eslint-config-google-jsdocless",
       "package": "eslint-config-google-jsdocless",
-      "downloads": 608
+      "downloads": 610
     }
   ]
 }
