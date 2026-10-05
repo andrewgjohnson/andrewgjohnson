@@ -2,9 +2,9 @@
 Platform|Downloads
 --------|---------
 Packagist — *PHP*|328,895
-npm — *TypeScript & JavaScript*|2,304
+npm — *TypeScript & JavaScript*|2,303
 RubyGems — *Ruby*|346
-**Total**|**331,545**
+**Total**|**331,544**
 ## Packagist — *PHP*
 Project|Downloads
 -------|---------
@@ -21,11 +21,11 @@ Project|Downloads
 Project|Downloads
 -------|---------
 [andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[755](https://www.npmjs.com/package/agjcalendar)
-[andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[630](https://www.npmjs.com/package/eslint-config-google-jsdocless)
+[andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[629](https://www.npmjs.com/package/eslint-config-google-jsdocless)
 [andrewgjohnson/**agjVersionless**](https://github.com/andrewgjohnson/agjVersionless)|[461](https://www.npmjs.com/package/@agjjquery/agjversionless)
 [agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[259](https://www.npmjs.com/package/@agjjquery/agjjquery)
 [agjjQuery/**coding-style**](https://github.com/agjjQuery/coding-style)|[199](https://www.npmjs.com/package/@agjjquery/coding-style)
-**Total**|**2,304**
+**Total**|**2,303**
 
 ## RubyGems — *Ruby*
 Project|Downloads
