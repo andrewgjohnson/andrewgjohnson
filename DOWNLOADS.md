@@ -2,9 +2,9 @@
 Platform|Downloads
 --------|---------
 Packagist — *PHP*|330,131
-npm — *TypeScript & JavaScript*|2,331
+npm — *TypeScript & JavaScript*|2,341
 RubyGems — *Ruby*|350
-**Total**|**332,812**
+**Total**|**332,822**
 ## Packagist — *PHP*
 Project|Downloads
 -------|---------
@@ -20,12 +20,12 @@ Project|Downloads
 ## npm — *TypeScript & JavaScript*
 Project|Downloads
 -------|---------
-[andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[771](https://www.npmjs.com/package/agjcalendar)
-[andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[634](https://www.npmjs.com/package/eslint-config-google-jsdocless)
-[andrewgjohnson/**agjVersionless**](https://github.com/andrewgjohnson/agjVersionless)|[465](https://www.npmjs.com/package/@agjjquery/agjversionless)
+[andrewgjohnson/**agjCalendar**](https://github.com/andrewgjohnson/agjCalendar)|[775](https://www.npmjs.com/package/agjcalendar)
+[andrewgjohnson/**eslint-config-google-jsdocless**](https://github.com/andrewgjohnson/eslint-config-google-jsdocless)|[636](https://www.npmjs.com/package/eslint-config-google-jsdocless)
+[andrewgjohnson/**agjVersionless**](https://github.com/andrewgjohnson/agjVersionless)|[469](https://www.npmjs.com/package/@agjjquery/agjversionless)
 [agjjQuery/**agjjQuery**](https://github.com/agjjQuery/agjjQuery)|[261](https://www.npmjs.com/package/@agjjquery/agjjquery)
 [agjjQuery/**coding-style**](https://github.com/agjjQuery/coding-style)|[200](https://www.npmjs.com/package/@agjjquery/coding-style)
-**Total**|**2,331**
+**Total**|**2,341**
 
 ## RubyGems — *Ruby*
 Project|Downloads
