@@ -13,7 +13,7 @@
     {
       "repository": "andrewgjohnson/agjCalendar",
       "package": "agjcalendar",
-      "downloads": 901
+      "downloads": 902
     },
     {
       "repository": "andrewgjohnson/agjVersionless",
@@ -23,7 +23,7 @@
     {
       "repository": "andrewgjohnson/eslint-config-google-jsdocless",
       "package": "eslint-config-google-jsdocless",
-      "downloads": 687
+      "downloads": 688
     }
   ]
 }
