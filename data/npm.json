@@ -13,12 +13,12 @@
     {
       "repository": "andrewgjohnson/agjCalendar",
       "package": "agjcalendar",
-      "downloads": 995
+      "downloads": 997
     },
     {
       "repository": "andrewgjohnson/agjVersionless",
       "package": "@agjjquery/agjversionless",
-      "downloads": 518
+      "downloads": 519
     },
     {
       "repository": "andrewgjohnson/eslint-config-google-jsdocless",
