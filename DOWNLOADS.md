@@ -1,21 +1,21 @@
 # Downloads
 Platform|Downloads
 --------|---------
-Packagist — *PHP*|342,996
+Packagist — *PHP*|343,024
 npm — *TypeScript & JavaScript*|2,807
 RubyGems — *Ruby*|394
-**Total**|**346,197**
+**Total**|**346,225**
 ## Packagist — *PHP*
 Project|Downloads
 -------|---------
-[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[265,058](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
-[andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[77,193](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
+[andrewgjohnson/**imagettftextblur**](https://github.com/andrewgjohnson/imagettftextblur)|[265,072](https://packagist.org/packages/andrewgjohnson/imagettftextblur/stats)
+[andrewgjohnson/**linebreaks4imagettftext**](https://github.com/andrewgjohnson/linebreaks4imagettftext)|[77,207](https://packagist.org/packages/andrewgjohnson/linebreaks4imagettftext/stats)
 [andrewgjohnson/**imagettftextgradient**](https://github.com/andrewgjohnson/imagettftextgradient)|[535](https://packagist.org/packages/andrewgjohnson/imagettftextgradient/stats)
 [andrewgjohnson/**agjgd**](https://github.com/andrewgjohnson/agjgd)|[86](https://packagist.org/packages/andrewgjohnson/agjgd/stats)
 [andrewgjohnson/**imageblendedcolorallocate**](https://github.com/andrewgjohnson/imageblendedcolorallocate)|[66](https://packagist.org/packages/andrewgjohnson/imageblendedcolorallocate/stats)
 [andrewgjohnson/**imagegradientrectangle**](https://github.com/andrewgjohnson/imagegradientrectangle)|[33](https://packagist.org/packages/andrewgjohnson/imagegradientrectangle/stats)
 [andrewgjohnson/**imagecolorallocatefromstring**](https://github.com/andrewgjohnson/imagecolorallocatefromstring)|[25](https://packagist.org/packages/andrewgjohnson/imagecolorallocatefromstring/stats)
-**Total**|**342,996**
+**Total**|**343,024**
 
 ## npm — *TypeScript & JavaScript*
 Project|Downloads
